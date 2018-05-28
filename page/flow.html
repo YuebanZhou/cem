@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>数据流图</title>
+  <link rel="stylesheet" type="text/css" href="./Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="./Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="./Assets/css/thems.css">
+  <link rel="stylesheet" type="text/css" href="./Assets/css/bootstrap.css">
+  <!-- <script type="text/javascript" src="/Assets/js/jquery-1.8.3.min.js"></script> -->
+  <script type="text/javascript" src="./Assets/js/jquery-3.1.0.js"></script>
+  <script src="./Assets/js/echarts.js"></script>
+  <script src="./Assets/js/angular.js"></script>
+  <script src="./Assets/js/bootstrap.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .return {
+    font-size: 20px;
+    display: inline-block;
+    margin: 10px;
+  }
+
+  #jdt {
+  /* margin-top:120px; */
+  }
+</style>
+
+<body>
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">构建Job进度</span>
+          <a href="/page/list.html" class="return">返回首页</a>
+        </div>
+        <div class="space_hx">&nbsp;</div>
+      </div>
+      <div class="progress" id="jdt">
+  		<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 0%" >
+    	<span class="sr-only">100% Complete</span>
+  		</div>
+</div>
+</div>
+      <!--会议列表-->
+    </div>
+  </div>
+
+  <script>
+  var flag = localStorage.getItem("flag");
+  console.log(flag);
+  window.onload = function () {
+    if (flag == "true") {
+      console.log("true");
+      $(".active").width("100%");
+      if ($(".active").width("100%")) {
+        setTimeout(function () {
+          window.location = './list.html'
+        }, 1000)
+      }
+    } else if (flag == "false") {
+      console.log("false");
+      $(".active").width("50%");
+      if ($(".active").width("50%")) {
+        $(".progress-bar").addClass("progress-bar-danger")
+        setTimeout(function () {
+          window.location = './list.html'
+        }, 1000)
+      }
+    }
+  }
+
+  </script>
+</body>
+
+</html>

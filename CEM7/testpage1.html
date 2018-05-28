@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>项目列表</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+  <script src="Assets/js/angular.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .id {
+    width: 5%;
+  }
+
+  /* 用户名 */
+
+  .uname {
+    width: 10%;
+  }
+
+  /* 项目名称 */
+
+  .pname {
+    width: 10%;
+  }
+
+  /* 项目所在路径 */
+
+  .path {
+    width: 10%;
+  }
+
+  /* 项目版本号 */
+
+  .vnum {
+    width: 10%;
+  }
+
+  /* 当前状态 */
+
+  .status {
+    width: 10%;
+  }
+
+  /* 项目创建时间 */
+
+  .time {
+    width: 10%;
+  }
+
+  /* 项目信息 */
+
+  .msg {
+    width: 10%;
+  }
+
+  /* 项目负责人 */
+
+  .peo {
+    width: 10%;
+  }
+
+  /* 项目状态 */
+
+  .jstatus {
+    width: 10%;
+  }
+
+  .jstatus a {
+    padding: 5px;
+    background-color: rgb(15, 192, 15);
+    margin: 2px;
+    color: #000;
+    border-radius: 5px;
+  }
+
+  .jstatus .g {
+    background-color: rgb(15, 192, 15);
+  }
+
+  .jstatus .dis {
+    background-color: #ccc;
+    pointer-events: none;
+  }
+
+  #box1 {
+    position: relative;
+
+  }
+
+  #pagination_15 {
+    float: right;
+    margin-right: 20px;
+  }
+
+  .table {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .spanbtn {
+    cursor: pointer;
+  }
+
+  ul li {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+  }
+</style>
+
+<body>
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">项目列表</span>
+        </div>
+        <!--查询-->
+        <div id="search">
+          <div class="search search1">
+            <span>按项目id查询：</span>
+            <div class="s_text" id="box1">
+              <input name="" type="text" id="txt1">
+            </div>
+            <a href="javascript:void(0);" class="btn" ng-click="search1($event)">查询</a>
+          </div>
+          <div class="search search2">
+            <span>按项目名称查询：</span>
+            <div class="s_text" id="box2">
+              <input name="" type="text" id="txt2">
+            </div>
+            <a href="javascript:void(0);" class="btn" ng-click="search2($event)">查询</a>
+          </div>
+          <div class="search search3">
+            <span>按项目负责人查询：</span>
+            <div class="s_text" id="box3">
+              <input name="" type="text" id="txt3">
+            </div>
+            <a href="javascript:void(0);" class="btn" ng-click="search3($event)">查询</a>
+          </div>
+
+        </div>
+
+        <!--查询-->
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+        <form action="" method="post">
+          <table cellpadding="0" cellspacing="0" class="list_hy table" id="table2">
+            <thead>
+              <tr>
+                <th class="id" scope="col">id</th>
+                <th class="uname" scope="col">用户名</th>
+                <th class="pname" scope="col">项目名称</th>
+                <th class="path" scope="col">项目所在路径</th>
+                <th class="vnum" scope="col">项目版本号</th>
+                <th class="status" scope="col">当前状态</th>
+                <th class="time" scope="col">项目创建时间</th>
+                <th class="msg" scope="col">项目信息</th>
+                <th class="peo" scope="col">项目负责人</th>
+                <th class="jstatus" scope="col">项目状态</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </form>
+
+        <!--列表-->
+        <!--右边底部-->
+        <div class="r_foot">
+          <div class="r_foot_m">
+            <!--分页-->
+            <div class="page">
+
+              <!-- 选中的时候，添加now类名 -->
+              <ul>
+                <li>
+                  <span>共</span>
+                  <span class="totalpage"></span>
+                  <span>页</span>
+
+                </li>
+                <li>
+                  <a href="" class="btn">
+                    首页
+                  </a>
+                </li>
+
+                <li>
+                  <!-- 前一页 -->
+                  <a href="" class="prev">
+                    <img src="Assets/images/icon7.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <!-- 后一页 -->
+                  <a href="" class="next">
+                    <img src="Assets/images/icon8.png" alt="" />
+                  </a>
+                </li>
+                <li>
+
+                  <a href="" class="btn">
+                    尾页
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+            <!--分页-->
+          </div>
+        </div>
+        <!--右边底部-->
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+  <!-- angualrjs相关配置 start -->
+  <script>
+  </script>
+  <!-- angualrjs相关配置 end -->
+
+  <!-- 将页面中的数据存储到本地 start -->
+  <script>
+    window.onload = function () {
+      console.log("全部加载完毕");
+      var tr = $("#table2 tr");
+      console.log(tr.length);
+      //goPage(1);
+      // localStorage.clear();
+      //每行9个元素
+      for (var i = 0; i < 9; i++) {
+        //行数为tr的条数，排除第一行
+        for (var j = 0; j < tr.length; j++) {
+          var temp = tr[j].children[i].innerHTML;
+          //将获取到的列表的内容存储到本地
+          localStorage.setItem("listkey" + j + i, temp)
+        }
+      }
+      //排他样式
+      var abtn = $(".r_foot a")
+      for (var i = 0; i < abtn.length; i++) {
+        abtn[i].index = i;
+        abtn[i].onclick = function () {
+          for (var i = 0; i < abtn.length; i++) {
+            abtn[i].className = "";
+          }
+          this.className = "now";
+        }
+      }
+
+      //逻辑
+      // $(".r_foot .prev").click(function () {
+      //   console.log("上一页");
+      // })
+      // $(".r_foot .next").click(function () {
+      //   console.log("下一页");
+      // })
+
+      // $(".r_foot a").click(function () {
+      //   console.log("被点击了");
+      //   //获取当前页码
+      //   var val = $(this).text();
+      //   console.log(val);
+
+
+
+      // })
+
+
+    }
+  </script>
+  <script>
+    $.ajax({
+      url: "./Assets/json/list2.json",
+      success: function (data) {
+        console.log(data);
+        console.log(data.list);
+        let str="";
+        let str1=""
+        let str2=""
+        let str3=""
+        let str4=""
+        let str5=""
+        let str6=""
+        let str7=""
+        let str8=""
+        let str9=""
+        let str10=""
+        let str11=""
+        let str12=""
+        var tr=""
+        for (let i = 0; i < data.list.length; i++) {
+          str1 = "<tr>";
+          str2 = "<td class='id'>" + data.list[i].pro_id + "</td>";
+          str3 = "<td class='uname'>" + data.list[i].username + "</td>";
+          str4 = "<td class='pname'>" + data.list[i].pro_id + "</td>";
+          str5 = "<td class='path'>" + data.list[i].pro_id + "</td>";
+          str6 = "<td class='vnum'>" + data.list[i].pro_id + "</td>";
+          str7 = "<td class='status'>" + data.list[i].pro_id + "</td>";
+          str8 = "<td class='time'>" + data.list[i].pro_id + "</td>";
+          str9 = "<td class='msg'>" + data.list[i].pro_id + "</td>";
+          str10 = "<td class='peo'>" + data.list[i].pro_id + "</td>";
+          str11 = "<td class='jstatus'><a href='./history.html' ng-class='{dis:" + data.list[i].pro_id +
+            "}'>历史</a><a href='./publish.html' class='g' ng-click='getid($event)'>发布</a></td>";
+          str12 = "</tr>";
+          
+          str=str1+str2+str3+str4+str5+str6+str7+str8+str9+str10+str11+str12;
+          tr+=str;
+          $("table tbody").html(tr);
+
+        }
+        
+      }
+    })
+  </script>
+</body>
+
+
+</html>

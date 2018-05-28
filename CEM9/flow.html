@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>数据流图</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <link rel="stylesheet" href="./Assets/css/bootstrap.css">
+  <script src="./Assets/js/jquery-3.1.0.js"></script>
+  <script src="Assets/js/echarts.js"></script>
+  <script src="./Assets/js/angular.js"></script>
+  <script src="./Assets/js/bootstrap.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .return {
+    font-size: 20px;
+    display: inline-block;
+    margin: 10px;
+  }
+
+  #container {
+    width: 90%;
+    height: 80%;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 10px;
+  }
+</style>
+
+<body>
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">数据流图</span>
+          <a href="./list.html" class="return">返回首页</a>
+        </div>
+        <div class="space_hx">&nbsp;</div>
+      </div>
+
+      <!--会议列表-->
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped active" style="width: 0%">
+          <span class="sr-only">45% Complete</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    //localStorage.setItem("flag", true)
+    var flag = localStorage.getItem("flag");
+    console.log(flag);
+    window.onload = function () {
+      if (flag == "true") {
+        console.log("true");
+        $(".active").width("100%");
+        if ($(".active").width("100%")) {
+          setTimeout(function () {
+            window.location = './index.html'
+          }, 1000)
+        }
+      } else if (flag == "false") {
+        console.log("false");
+        $(".active").width("50%");
+        if ($(".active").width("50%")) {
+          $(".progress-bar").addClass("progress-bar-danger")
+          setTimeout(function () {
+            window.location = './index.html'
+          }, 1000)
+        }
+      }
+    }
+  </script>
+
+</body>
+
+</html>

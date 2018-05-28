@@ -1,0 +1,417 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>数据流图</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+  <script src="Assets/js/echarts.js"></script>
+  <script src="./Assets/js/angular.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .return {
+    font-size: 20px;
+    display: inline-block;
+    margin: 10px;
+  }
+
+  #container {
+    width: 90%;
+    height: 80%;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 10px;
+  }
+</style>
+
+<body ng-app="myApp" ng-controller="ctrl">
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">数据流图</span>
+          <a href="./list.html" class="return">返回首页</a>
+        </div>
+        <div class="space_hx">&nbsp;</div>
+      </div>
+      <div id="container"></div>
+      <!--会议列表-->
+    </div>
+  </div>
+
+  <script>
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    //数据中有11个元素
+    //name表示元素的名称，value表示元素的定位，category表示元素的类别
+    var data = [{
+        name: 0,
+        value: [10, 10],
+        category: 0,
+
+      },
+      {
+        name: "bb",
+        value: [10, 30],
+        category: 0
+      },
+      {
+        name: "cc",
+        value: [10, 50],
+        category: 0
+      },
+      {
+        name: "dd",
+        value: [30, 10],
+        category: 1
+      },
+      {
+        name: "ee",
+        value: [30, 30],
+        category: 0
+      },
+      {
+        name: "ff",
+        value: [30, 50],
+        category: 0
+      },
+      {
+        name: "gg",
+        value: [50, 10],
+        category: 1
+      },
+      {
+        name: "hh",
+        value: [50, 30],
+        category: 0
+      },
+      {
+        name: "ii",
+        value: [70, 10],
+        category: 0
+      },
+      {
+        name: "jj",
+        value: [70, 30],
+        category: 1
+      },
+      {
+        name: "kk",
+        value: [70, 50],
+        category: 1
+      }
+    ];
+
+    var colors = [
+      '#c23531',
+      '#2f4554',
+      '#61a0a8',
+      '#d48265',
+      '#91c7ae',
+      '#749f83',
+      '#ca8622',
+      '#bda29a',
+      '#6e7074',
+      '#546570',
+      '#c4ccd3'
+    ];
+    //根据i的值返回一个颜色，一共11种颜色
+    function getColorPalette(i) {
+      return colors[i];
+    }
+    // 数据流图的相关配置
+    option = {
+      title: {
+        text: '数据流向图'
+      },
+      tooltip: {},
+      //不显示X轴
+      xAxis: {
+        show: false,
+        type: 'value'
+      },
+      //不显示Y轴
+      yAxis: {
+        show: false,
+        type: 'value'
+      },
+      //数据的范围，最小是0，最大是100
+      dataRange: {
+        min: 0,
+        max: 100,
+        y: '60%',
+        calculable: true,
+        color: ['#ff3333', 'orange', 'yellow', 'lime', 'aqua']
+      },
+      //图例的数据数组，表示把数据分成“AA”和“BB”两部分
+      legend: {
+        data: ["AA", "BB"]
+      },
+      series: [{
+        //图标类型是graph 分组类型
+        type: 'graph',
+        //布局方式
+        layout: 'none',
+        //坐标系类型是2维坐标
+        coordinateSystem: 'cartesian2d',
+        //关系节点的大小
+        symbolSize: 40,
+        //分组，两个分组，一个是AA另一个是BB
+        categories: [{
+            name: 'AA'
+          },
+          {
+            name: 'BB'
+          }
+        ],
+        label: {
+          normal: {
+            show: true
+          }
+        },
+        //边两端标记类型，箭头
+        edgeSymbol: ['circle', 'arrow'],
+        //边两端标记大小，箭头
+        edgeSymbolSize: [4, 10],
+        data: data,
+        itemStyle: {
+          normal: {
+            label: {
+              //标签相对于图形左上角的位置
+              position: ['20%', '100%'],
+              textStyle: {
+                // color: 'black'
+              }
+            }
+          }
+        },
+        lineStyle: {
+          normal: {
+            color: '#a0a0a0',
+            opacity: 1,
+            width: 2,
+            // curveness: 0.1
+          }
+        }
+      }, {
+        type: 'lines',
+        coordinateSystem: 'cartesian2d',
+        categories: [{
+            name: 'AA'
+          },
+          {
+            name: 'BB'
+          }
+        ],
+        // zlevel: 2,
+        effect: {
+          show: true,
+          smooth: false,
+          trailLength: 0,
+          symbol: "arrow",
+          //color:'rgba(55,155,255,0.5)',
+          symbolSize: 12
+        },
+        lineStyle: {
+          normal: {
+            // color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+            //     offset: 0,
+            //     color: 'rgb(255, 0, 0)'
+            // }, {
+            //     offset: 1,
+            //     color: 'rgb(0, 255, 0)'
+            // }]),
+            // color:'#a0a0a0',
+            color: function () {
+              return getColorPalette(3);
+            }(),
+            width: 2,
+            opacity: 1,
+            // curveness: 0.1//贝塞尔曲线度
+          }
+        },
+        //coord中数据是在二维坐标轴上的位置信息
+        //这里的数据表示的是箭头的流向
+        data: [
+          [{
+            coord: [10, 10]
+          }, {
+            coord: [10, 30],
+            lineStyle: {
+              normal: {
+                color: '#dcdcdc'
+              }
+            },
+            category: 0
+          }],
+          [{
+            coord: [10, 30]
+          }, {
+            coord: [30, 30],
+
+          }],
+          [{
+            coord: [30, 30]
+          }, {
+            coord: [50, 30]
+          }],
+          [{
+            coord: [10, 10]
+          }, {
+            coord: [30, 30],
+            value: 12
+          }],
+          [{
+            coord: [10, 10]
+          }, {
+            coord: [30, 50],
+            value: 25
+          }],
+          [{
+            coord: [10, 30]
+          }, {
+            coord: [50, 10],
+            value: 8
+          }],
+          [{
+            coord: [30, 30]
+          }, {
+            coord: [70, 30],
+            value: 4
+          }],
+          [{
+            coord: [30, 10]
+          }, {
+            coord: [70, 10],
+            value: 75
+          }],
+          [{
+              coord: [50, 10]
+            },
+            {
+              coord: [70, 50],
+              value: 38
+            }
+          ]
+        ]
+      }]
+    };
+    //将上面的配置显示在echart图中
+    myChart.setOption(option, true);
+    $("body").click(function () {
+      // console.log("screenX"+event.screenX);
+      // console.log("screenY"+event.screenY);
+      // console.log("clientX"+event.clientX);
+      // console.log("clientY"+event.clientY);
+      // 不管浏览器怎样变化，page相关参数都是相对于documented的距离来说的
+      console.log("pageX" + event.pageX);
+      console.log("pageY" + event.pageY);
+      var x = event.pageX;
+      var y = event.pageY;
+      //设定元素的id值
+      var circleid = 0;
+      //name为0的元素
+      if (x > 156 & x < 200) {
+        if (y > 390 & y < 430) {
+          circleid = 1;
+          // self.location = './screen.html';
+        }
+      }
+      //name为bb的元素
+      if (x > 156 & x < 200) {
+        if (y > 254 & y < 298) {
+          circleid = 2;
+          self.location = './screen.html'
+        }
+      }
+      //name为cc的元素
+      if (x > 156 & x < 200) {
+        if (y > 120 & y < 163) {
+          circleid = 3;
+          self.location = './screen.html'
+        }
+      }
+      //name为dd的元素
+      if (x > 324 & x < 365) {
+        if (y > 390 & y < 430) {
+          circleid = 4;
+          self.location = './screen.html'
+        }
+      }
+      //name为ee的元素
+      if (x > 324 & x < 365) {
+        if (y > 254 & y < 298) {
+          circleid = 5;
+          self.location = './screen.html'
+        }
+      }
+      //name为ff的元素
+      if (x > 324 & x < 365) {
+        if (y > 120 & y < 163) {
+          circleid = 6;
+          self.location = './screen.html'
+        }
+      }
+      //name为gg的元素
+      if (x > 492 & x < 534) {
+        if (y > 390 & y < 430) {
+          circleid = 7;
+          self.location = './screen.html'
+        }
+      }
+      //name为hh的元素
+      if (x > 492 & x < 534) {
+        if (y > 254 & y < 298) {
+          circleid = 8;
+          self.location = './screen.html'
+        }
+      }
+      //name为ii的元素
+      if (x > 660 & x < 702) {
+        if (y > 390 & y < 430) {
+          circleid = 9;
+          self.location = './screen.html'
+        }
+      }
+      //name为jj的元素
+      if (x > 660 & x < 702) {
+        if (y > 254 & y < 298) {
+          circleid = 10;
+          self.location = './screen.html'
+        }
+      }
+      //name为kk的元素
+      if (x > 660 & x < 702) {
+        if (y > 120 & y < 163) {
+          circleid = 11;
+          self.location = './screen.html'
+        }
+      }
+    })
+
+    angular.module("myApp", [])
+      .controller("ctrl", function ($scope, $http) {
+        $http({
+          methods: "post",
+          //这里的url是虚拟的，需要写后台接收数据的接口
+          url: "./Assets/json/flow.json",
+          params: {circleid:$scope.circleid}
+        }).then(function (classes) {
+          $scope.classes = classes.data;
+          $scope.name = classes.data.name;
+          console.log("请求成功");
+        }, function () {
+          console.log("请求失败");
+        })
+      })
+  </script>
+</body>
+
+</html>

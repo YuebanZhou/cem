@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>头部</title>
+	<link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+	<link rel="stylesheet" href="Assets/css/bootstrap.css">
+	<script src="Assets/js/jquery-3.1.0.js"></script>
+	<script src="Assets/js/bootstrap.js"></script>
+</head>
+<style>
+	.head {
+		position: relative;
+	}
+	.logo {
+		color: #fff;
+		font-size: 20px;
+		font-weight: bold;
+		margin: 10px;
+	}
+	#show {
+		color: #fff;
+		font-size: 20px;
+		font-weight: bold;
+		margin: 10px;
+		position: absolute;
+		right: 20px;
+
+	}
+	a {
+		display: block;
+		width: 30px;
+		height: 30px;
+		background-color: #fff;
+		border-radius: 50%;
+		position: absolute;
+		right: 165px;
+		top: 10px;
+	}
+	a img {
+		width: 30px;
+		height: 30px;
+
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 10;
+	}
+</style>
+
+<body onload="showLeftTime()">
+	<div class="head clearfix">
+		<div class="logo">
+			devops平台
+		</div>
+		<a href="javascript:void(0);">
+			<img src="Assets/images/personal.png" alt="">
+		</a>
+		<label id="show">显示时间的位置</label>
+	</div>
+</body>
+<script>
+	// var initializationTime = (new Date()).getTime();
+
+	function showLeftTime() {
+		var now = new Date();
+		var month = now.getMonth();
+		var day = now.getDate();
+		var hours = now.getHours();
+		var minutes = now.getMinutes();
+		// document.all.show.innerHTML = "" + year + "年" + month + "月" + day + "日 " + hours + ":" + minutes + ":" + seconds + "";
+		document.all.show.innerHTML =month + 1+"月" + day + "日 " + hours + ":" + minutes ;
+		//一秒刷新一次显示时间
+		var timeID = setTimeout(showLeftTime, 60000);
+	}
+</script>
+
+</html>

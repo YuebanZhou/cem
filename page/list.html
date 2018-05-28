@@ -1,0 +1,1154 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>项目列表</title>
+  <link rel="stylesheet" type="text/css" href="./Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="./Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="./Assets/css/thems.css">
+  <script type="text/javascript" src="./Assets/js/jquery-1.8.3.min.js"></script>
+  <script src="./Assets/js/angular.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .id {
+    width: 3%;
+  }
+
+  /* 用户名 */
+
+  .uname {
+    width: 5%;
+  }
+
+  /* 项目名称 */
+
+  .pname {
+    width: 9%;
+  }
+
+  /* 项目所在路径 */
+
+  .path {
+    width: 32%;
+  }
+
+
+  /* 当前状态 */
+
+  .status {
+    width: 5%;
+  }
+
+  /* 项目创建时间 */
+
+  .time {
+    width: 15%;
+  }
+
+  /* 项目信息 */
+
+  .msg {
+    width: 10%;
+  }
+
+  /* 项目负责人 */
+
+  .peo {
+    width: 6%;
+  }
+
+  /* 项目状态 */
+
+  .jstatus {
+    width: 10%;
+  }
+
+  .jstatus a {
+    padding: 5px;
+    background-color: rgb(15, 192, 15);
+    margin: 2px;
+    color: #000;
+    border-radius: 5px;
+  }
+
+  .jstatus .g {
+    background-color: rgb(15, 192, 15);
+  }
+
+  .jstatus .dis {
+    background-color: #ccc;
+    pointer-events: none;
+  }
+
+  #box1 {
+    position: relative;
+
+  }
+
+  #pagination_15 {
+    float: right;
+    margin-right: 20px;
+  }
+
+  .table {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .spanbtn {
+    cursor: pointer;
+
+  }
+
+  .pagebtn {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-align: center;
+    line-height: 25px;
+
+  }
+
+  .sbtn {
+    width: 45px;
+    margin-top: 10px;
+    position: absolute;
+    top: 69px;
+    left: 742px;
+  }
+
+  .searchl {
+    width: 250px;
+  }
+
+  .total {
+    font-weight: bolder;
+    font-size: 16px;
+  }
+
+  .nowpage {
+    background-color: #ccc;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+  }
+
+  .pageicon {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  #dv1 {
+    overflow: auto;
+  }
+
+  #dv2 {
+    overflow: auto;
+  }
+
+  #dv3 {
+    overflow: auto;
+  }
+
+  /* .btn {
+    position: absolute;
+    top: 69px;
+    left: 742px;
+  } */
+
+  .red {
+    color: red !important;
+    display: none;
+
+    position: absolute;
+    top: 82px;
+    left: 803px;
+  }
+</style>
+
+<body ng-app="myApp" ng-controller="ctrl">
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">项目列表</span>
+        </div>
+        <!--查询-->
+        <div id="search">
+          <div class="search searchl">
+            <span>按项目id查询：</span>
+            <div class="s_text" id="box1">
+              <input name="" type="text" id="txt1">
+            </div>
+          </div>
+          <div class="search searchl">
+            <span>按项目名称查询：</span>
+            <div class="s_text" id="box2">
+              <input name="" type="text" id="txt2">
+            </div>
+          </div>
+          <div class="search searchl">
+            <span>按项目负责人查询：</span>
+            <div class="s_text" id="box3">
+              <input name="" type="text" id="txt3">
+            </div>
+          </div>
+          <a href="javascript:void(0);" class="btn sbtn" ng-click="search($event)">
+            查询
+          </a>
+          <span class="red">请输入查询内容</span>
+        </div>
+
+        <!--查询-->
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+        <form action="" method="post">
+          <table cellpadding="0" cellspacing="0" class="list_hy table">
+            <tr>
+              <th class="id" scope="col">id</th>
+              <th class="uname" scope="col">用户名</th>
+              <th class="pname" scope="col">项目名称</th>
+              <th class="path" scope="col">项目所在路径</th>
+              <th class="vnum" scope="col">项目版本号</th>
+              <!-- <th class="status" scope="col">当前状态</th> -->
+              <th class="time" scope="col">项目创建时间</th>
+              <th class="msg" scope="col">项目信息</th>
+              <th class="peo" scope="col">项目负责人</th>
+              <th class="jstatus" scope="col">项目状态</th>
+            </tr>
+          </table>
+
+          <table cellpadding="0" cellspacing="0" class="list_hy table" id="table2">
+            <tr ng-repeat="item in classes" on-finish-render>
+              <td class="id">{{item.id}}</td>
+              <td class="uname">{{item.user_name}}</td>
+              <td class="pname">{{item.pro_name}}</td>
+              <td class="path">{{item.pro_path}}</td>
+              <td class="vnum">{{item.pro_num}}</td>
+              <!-- <td class="status">{{item.pro_flag}}</td> -->
+              <td class="time">{{item.time}}</td>
+              <td class="msg">{{item.pro_info}}</td>
+              <td class="peo">{{item.pro_master}}</td>
+              <td class="jstatus">
+                <a href="./history.html" ng-class='{dis:item.pro_flag}' ng-click="getidd($event)">历史</a>
+
+                <a href="./publish.html" class="g" ng-click="getid($event)">发布</a>
+              </td>
+              <!-- 类名为.g的按钮是绿色的 -->
+            </tr>
+          </table>
+          <table cellpadding="0" cellspacing="0" class="list_hy table" id="tabler1"></table>
+          <table cellpadding="0" cellspacing="0" class="list_hy table" id="tabler2"></table>
+          <table cellpadding="0" cellspacing="0" class="list_hy table" id="tabler3"></table>
+        </form>
+
+        <!--列表-->
+        <!--右边底部-->
+        <div class="r_foot">
+          <div class="r_foot_m">
+            <!--分页-->
+            <div id="barcon" name="barcon"></div>
+            <div id="barconr1" name="barconr1"></div>
+            <div id="barconr2" name="barconr2"></div>
+            <div id="barconr3" name="barconr3"></div>
+            <!--分页-->
+          </div>
+        </div>
+        <!--右边底部-->
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+  <!-- angualrjs相关配置 start -->
+  <script>
+    var zyApp = angular.module('myApp', []);
+    zyApp.directive('onFinishRender', function ($timeout) {
+      return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+          if (scope.$last === true) {
+            $timeout(function () {
+              scope.$emit('ngRepeatFinished');
+
+            });
+          }
+        }
+      }
+    })
+
+    zyApp.controller("ctrl", function ($scope, $http) {
+      $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+          var tr = $("#table2 tr");
+          console.log("获取数据成功");
+          console.log("表格长度" + tr.length);
+
+          //内容存储到本地
+          $scope.getid = function ($event) {
+            console.log("获取表格内容成功");
+            //获取当前点击元素的id值
+            var proid = $($event.target).parent().parent().find(".id").text()
+            var uname = $($event.target).parent().parent().find(".uname").text()
+            var pname = $($event.target).parent().parent().find(".pname").text()
+            var path = $($event.target).parent().parent().find(".path").text()
+            var status = $($event.target).parent().parent().find(".status").text()
+            var time = $($event.target).parent().parent().find(".time").text()
+            var msg = $($event.target).parent().parent().find(".msg").text()
+            var peo = $($event.target).parent().parent().find(".peo").text()
+            var vnum = $($event.target).parent().parent().find(".vnum").text()
+
+            localStorage.setItem("proid", proid);
+            localStorage.setItem("uname", uname);
+            localStorage.setItem("pname", pname);
+            localStorage.setItem("path", path);
+            localStorage.setItem("status", status);
+            localStorage.setItem("time", time);
+            localStorage.setItem("msg", msg);
+            localStorage.setItem("peo", peo);
+            localStorage.setItem("vnum", vnum);
+
+
+          }
+          $scope.getidd = function ($event) {
+            var proid = $($event.target).parent().parent().find(".id").text()
+            localStorage.setItem("proid", proid);
+          }
+
+          //goPage(1);
+          goPager(1);
+
+          function zy$(id) {
+            return document.getElementById(id);
+          }
+          //模拟数据
+          var keyWords1 = [];
+          var keyWords2 = [];
+          var keyWords3 = [];
+
+          var tr = $("#table2 tr");
+          for (var i = 0; i < tr.length; i++) {
+            td1 = tr.children().eq(0 + 9 * i).text();
+            td2 = tr.children().eq(2 + 9 * i).text();
+            td3 = tr.children().eq(7 + 9 * i).text();
+            keyWords1.push(td1);
+            keyWords2.push(td2);
+            keyWords3.push(td3);
+          }
+          //条件1
+          zy$("txt1").onkeyup = function () {
+            //只要键盘抬起就判断.页面中是否存在这个div,如果存在则干掉
+            if (zy$("dv1")) {
+              zy$("box1").removeChild(zy$("dv1"));
+            }
+            //先获取文本框的值
+            var text = this.value;
+            //创建一个临时数组,保存和数组中匹配的字符串
+            //之后用来显示模糊匹配
+            var tempArr = [];
+            //和数组中的每个元素字符串进行对比
+            for (var i = 0; i < keyWords1.length; i++) {
+              //关键词的第i个元素，在文本框中出现了
+              //文本框中只匹配第一个元素，就是index为0的元素
+              if (keyWords1[i].indexOf(text) >= 0) {
+                //匹配上之后，将这个关键词推到新数组中
+                tempArr.push(keyWords1[i]);
+              }
+            }
+            //数组重复，只显示一项
+            var newArr = [];
+            for (var j = 0; j < tempArr.length; j++) {
+              if (newArr.indexOf(tempArr[j]) == -1) {　　　　
+                newArr.push(tempArr[j]);　　
+              }
+            }
+            tempArr = newArr;
+            //如果文本框中没有数据或者临时数组中没有数据,就没有必要创建div
+            if (this.value.length == 0 || tempArr.length == 0) {
+              //如果有div就删除
+              if (zy$("dv1")) {
+                zy$("box1").removeChild(zy$("dv1"));
+              }
+              return;
+            }
+            //创建一个div,然后在div中显示对应的内容
+            var dvObj = document.createElement("div");
+            dvObj.id = "dv1";
+            zy$("box1").appendChild(dvObj);
+            //设置样式
+            dvObj.style.position = "absolute";
+            dvObj.style.left = "-20px";
+            dvObj.style.top = "25px";
+            dvObj.style.backgroundColor = "rgba(200, 200, 200, 0.5)";
+            dvObj.style.width = "90%";
+            //在div中创建p标签,在p标签中显示临时数组中的数据
+            for (var j = 0; j < tempArr.length; j++) {
+              var pobj = document.createElement("p");
+              dvObj.appendChild(pobj);
+              pobj.innerHTML = tempArr[j];
+              pobj.style.color = "#333";
+              pobj.style.width = "100%";
+              pobj.style.height = "40px";
+              pobj.style.margin = "0";
+              pobj.style.padding = "0";
+              pobj.style.cursor = "pointer";
+              pobj.style.fontSize = "15px";
+              if (tempArr.length >= 5) {
+                $("#dv1").height(200);
+              }
+
+              //注册鼠标进入和鼠标离开事件
+              pobj.onmouseover = function () {
+                this.style.backgroundColor = "rgba(0,0,0,0.5)";
+              };
+              pobj.onmouseout = function () {
+                this.style.backgroundColor = "";
+              };
+              //点击数组中元素的时候，将临时数组中的值适配到搜索框中
+              pobj.onclick = function () {
+                zy$("txt1").value = this.innerText;
+                this.parentNode.parentNode.removeChild(this.parentNode);
+              };
+            }
+
+          };
+          //条件2
+          zy$("txt2").onkeyup = function () {
+            //只要键盘抬起就判断.页面中是否存在这个div,如果存在则干掉
+            if (zy$("dv2")) {
+              zy$("box2").removeChild(zy$("dv2"));
+            }
+            //先获取文本框的值
+            var text = this.value;
+            //创建一个临时数组,保存和数组中匹配的字符串
+            //之后用来显示模糊匹配
+            var tempArr = [];
+            //和数组中的每个元素字符串进行对比
+            for (var i = 0; i < keyWords2.length; i++) {
+              //关键词的第i个元素，在文本框中出现了
+              //文本框中只匹配第一个元素，就是index为0的元素
+              if (keyWords2[i].indexOf(text) >= 0) {
+                //匹配上之后，将这个关键词推到新数组中
+                tempArr.push(keyWords2[i]);
+              }
+            }
+            //数组重复，只显示一项
+            var newArr = [];
+            for (var j = 0; j < tempArr.length; j++) {
+              if (newArr.indexOf(tempArr[j]) == -1) {　　　　
+                newArr.push(tempArr[j]);　　
+              }
+            }
+            tempArr = newArr;
+            //如果文本框中没有数据或者临时数组中没有数据,就没有必要创建div
+            if (this.value.length == 0 || tempArr.length == 0) {
+              //如果有div就删除
+              if (zy$("dv2")) {
+                zy$("box2").removeChild(zy$("dv2"));
+              }
+              return;
+            }
+            //创建一个div,然后在div中显示对应的内容
+            var dvObj = document.createElement("div");
+            dvObj.id = "dv2";
+            zy$("box2").appendChild(dvObj);
+            //设置样式
+            dvObj.style.position = "absolute";
+            dvObj.style.left = "-20px";
+            dvObj.style.top = "25px";
+            dvObj.style.backgroundColor = "rgba(200, 200, 200, 0.5)";
+            dvObj.style.width = "90%";
+            //在div中创建p标签,在p标签中显示临时数组中的数据
+            for (var j = 0; j < tempArr.length; j++) {
+              var pobj = document.createElement("p");
+              dvObj.appendChild(pobj);
+              pobj.innerHTML = tempArr[j];
+              pobj.style.color = "#333";
+              pobj.style.width = "100%";
+              pobj.style.height = "40px";
+              pobj.style.margin = "0";
+              pobj.style.padding = "0";
+              pobj.style.cursor = "pointer";
+              pobj.style.fontSize = "15px";
+              if (tempArr.length >= 5) {
+                $("#dv2").height(200);
+              }
+              //注册鼠标进入和鼠标离开事件
+              pobj.onmouseover = function () {
+                this.style.backgroundColor = "rgba(0,0,0,0.5)";
+              };
+              pobj.onmouseout = function () {
+                this.style.backgroundColor = "";
+              };
+              //点击数组中元素的时候，将临时数组中的值适配到搜索框中
+              pobj.onclick = function () {
+                zy$("txt2").value = this.innerText;
+                this.parentNode.parentNode.removeChild(this.parentNode);
+              };
+            }
+
+          };
+          //条件3
+          zy$("txt3").onkeyup = function () {
+            //只要键盘抬起就判断.页面中是否存在这个div,如果存在则干掉
+            if (zy$("dv3")) {
+              zy$("box3").removeChild(zy$("dv3"));
+            }
+            //先获取文本框的值
+            var text = this.value;
+            //创建一个临时数组,保存和数组中匹配的字符串
+            //之后用来显示模糊匹配
+            var tempArr = [];
+            //和数组中的每个元素字符串进行对比
+            for (var i = 0; i < keyWords3.length; i++) {
+              //关键词的第i个元素，在文本框中出现了
+              //文本框中只匹配第一个元素，就是index为0的元素
+
+              if (keyWords3[i].indexOf(text) >= 0) {
+                //匹配上之后，将这个关键词推到新数组中
+                tempArr.push(keyWords3[i]);
+              }
+            }
+            //数组重复，只显示一项
+            var newArr = [];
+            for (var j = 0; j < tempArr.length; j++) {
+              if (newArr.indexOf(tempArr[j]) == -1) {　　　　
+                newArr.push(tempArr[j]);　　
+              }
+            }
+            tempArr = newArr;
+            //如果文本框中没有数据或者临时数组中没有数据,就没有必要创建div
+            if (this.value.length == 0 || tempArr.length == 0) {
+              //如果有div就删除
+              if (zy$("dv3")) {
+                zy$("box3").removeChild(zy$("dv3"));
+              }
+              return;
+            }
+            //创建一个div,然后在div中显示对应的内容
+            var dvObj = document.createElement("div");
+            dvObj.id = "dv3";
+            zy$("box3").appendChild(dvObj);
+            //设置样式
+            dvObj.style.position = "absolute";
+            dvObj.style.left = "-20px";
+            dvObj.style.top = "25px";
+            dvObj.style.backgroundColor = "rgba(200, 200, 200, 0.5)";
+            dvObj.style.width = "90%";
+            //在div中创建p标签,在p标签中显示临时数组中的数据
+            for (var j = 0; j < tempArr.length; j++) {
+              var pobj = document.createElement("p");
+              dvObj.appendChild(pobj);
+              pobj.innerHTML = tempArr[j];
+              pobj.style.color = "#333";
+              pobj.style.width = "100%";
+              pobj.style.height = "40px";
+              pobj.style.margin = "0";
+              pobj.style.padding = "0";
+              pobj.style.cursor = "pointer";
+              pobj.style.fontSize = "15px";
+              if (tempArr.length >= 5) {
+                $("#dv3").height(200);
+              }
+              //注册鼠标进入和鼠标离开事件
+              pobj.onmouseover = function () {
+                this.style.backgroundColor = "rgba(0,0,0,0.5)";
+              };
+              pobj.onmouseout = function () {
+                this.style.backgroundColor = "";
+              };
+              //点击数组中元素的时候，将临时数组中的值适配到搜索框中
+              pobj.onclick = function () {
+                zy$("txt3").value = this.innerText;
+                this.parentNode.parentNode.removeChild(this.parentNode);
+              };
+            }
+
+
+          };
+          //实现查询模糊匹配功能 end  ****************
+        }),
+        $http({
+          methods: "get",
+          //url: "/main/devopsinfo",
+          url: "./Assets/json/list.json",
+          params: {
+            'devops_id': '1'
+          }
+        }).then(function (classes) {
+          $scope.classes = classes.data;
+          $scope.name = classes.data.name;
+          console.log("获取所有数据成功");
+          //查詢功能
+          $scope.search = function ($event) {
+            $("#table2").show()
+            $("#tabler1").html("")
+            $("#tabler2").html("")
+            $("#tabler3").html("")
+            //获取搜索框内容
+            var val1 = $("#txt1").val();
+            var val2 = $("#txt2").val();
+            var val3 = $("#txt3").val();
+            if (val1 == "" && val2 == "" && val3 == "") {
+              $(".red").show()
+            } else {
+              $(".red").hide()
+              $("#table2 tr").each(function () {
+                var vall1 = $(this).children("td").eq(0).html();
+                var vall2 = $(this).children("td").eq(2).html();
+                var vall3 = $(this).children("td").eq(7).html();
+                if (val1 == vall1 || val2 == vall2 || val3 == vall3) {
+                  $(this).addClass("sel")
+                  if ($("#table2 tr").hasClass("sel")) {
+                    $("#table2").hide()
+                    $("#tabler1").append("<tr>" + $(this).html() + "</tr>")
+                    goPager1(1)
+                  }
+                }
+                if (val2 == vall2 && val3 == vall3) {
+                  $(this).addClass("sel")
+                  if ($("#table2 tr").hasClass("sel")) {
+                    $("#table2").hide()
+                    $("#tabler1").hide()
+                    $("#tabler2").append("<tr>" + $(this).html() + "</tr>")
+                    goPager2(1)
+                  }
+                }
+                if (val2 == vall2 && val1 == vall1) {
+                  $(this).addClass("sel")
+                  if ($("#table2 tr").hasClass("sel")) {
+                    $("#table2").hide()
+                    $("#tabler1").hide()
+                    $("#tabler2").append("<tr>" + $(this).html() + "</tr>")
+                    goPager2(1)
+                  }
+                }
+                if (val3 == vall3 && val1 == vall1) {
+                  $(this).addClass("sel")
+                  if ($("#table2 tr").hasClass("sel")) {
+                    $("#table2").hide()
+                    $("#tabler1").hide()
+                    $("#tabler2").append("<tr>" + $(this).html() + "</tr>")
+                    goPager2(1)
+                  }
+                }
+                if (val1 == vall1 && val2 == vall2 && val3 == vall3) {
+                  $(this).addClass("sel")
+                  if ($("#table2 tr").hasClass("sel")) {
+                    $("#table2").hide()
+                    $("#tabler1").hide()
+                    $("#tabler2").hide()
+                    $("#tabler3").append("<tr>" + $(this).html() + "</tr>")
+                    goPager3(1)
+                  }
+                }
+              })
+
+            }
+
+          }
+        }, function () {
+          console.log("请求失败");
+          $("#table2").html("");
+        });
+    });
+  </script>
+  <!-- angualrjs相关配置 end -->
+
+
+  <script>
+    //实现分页功能 start**********
+    function goPage(pno) {
+      var itable = document.getElementById("table2");
+
+      var num = itable.rows.length; //表格所有行数(所有记录数)
+      var totalPage = 7; //总页数
+      var pageSize = 5; //每页显示行数
+      //总共分几页
+      if (num / pageSize > parseInt(num / pageSize)) {
+        totalPage = parseInt(num / pageSize) + 1;
+      } else {
+        totalPage = parseInt(num / pageSize);
+      }
+      var currentPage = pno; //当前页数
+      var startRow = (currentPage - 1) * pageSize + 1; //开始显示的行  31
+      var endRow = currentPage * pageSize; //结束显示的行   40
+      endRow = (endRow > num) ? num : endRow; //40
+      //遍历显示数据实现分页
+      for (var i = 1; i < (num + 1); i++) {
+        var irow = itable.rows[i - 1];
+        if (i >= startRow && i <= endRow) {
+          irow.style.display = "table-row";
+        } else {
+          irow.style.display = "none";
+        }
+      }
+      var pageEnd = document.getElementById("pageEnd");
+      var tempStr = "<span class='total'>共" + totalPage + "页</span>";
+      if (currentPage > 1) {
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPage(" + 1 + ")\">首页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPage(" + (currentPage - 1) +
+          ")\">上一页</span>"
+      } else {
+        tempStr += "<span class='btn spanbtn'>首页</span>";
+        tempStr += "<span class='btn spanbtn'>上一页</span>";
+      };
+      if (totalPage == 0) {
+        tempStr += ""
+
+      } else if (totalPage == 1) {
+        tempStr += "<a onclick=\"goPage(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" + currentPage +
+          "</span></a>"
+
+      } else if (totalPage == 2 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPage(" + currentPage + ")\"><span class='spanbtn pageicon nowpage'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPage(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) + "</span></a>"
+      } else if (totalPage == 2 && currentPage == 2) {
+        tempStr += "<a onclick=\"goPage(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            1) + "</span></a>" + "<a onclick=\"goPage(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage + "</span></a>"
+      } else if (totalPage >= 3 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPage(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPage(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) +
+          "</span></a>" + "<a onclick=\"goPage(" + (currentPage + 2) + ")\"><span class='spanbtn pageicon'>" +
+          (
+            currentPage + 2) +
+          "</span></a>"
+      } else if (totalPage >= 3 && currentPage == totalPage) {
+        tempStr += "<a onclick=\"goPage(" + (currentPage - 2) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            2) +
+          "</span></a>" + "<a onclick=\"goPage(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage - 1) +
+          "</span></a>" + "<a onclick=\"goPage(" + currentPage + ")\"><span class='spanbtn nowpage  pageicon'>" +
+          currentPage +
+          "</span></a>"
+      } else {
+        tempStr += "<a onclick=\"goPage(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            1) +
+          "</span></a>" + "<a onclick=\"goPage(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPage(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (
+            currentPage + 1) +
+          "</span></a>"
+      };
+      if (currentPage < totalPage) {
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPage(" + (currentPage + 1) +
+          ")\">下一页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);javascript:void(0);\" onClick=\"goPage(" + (
+          totalPage) + ")\">尾页</span>";
+      } else {
+        tempStr += "<span class='btn spanbtn'>下一页</span>";
+        tempStr += "<span class='btn spanbtn'>尾页</span>";
+      }
+      //$("#barconr").hide()
+      document.getElementById("barcon").innerHTML = tempStr;
+
+    }
+
+    function goPager1(pno) {
+      var itable = document.getElementById("tabler1");
+
+      var num = itable.rows.length; //表格所有行数(所有记录数)
+      var totalPage = 7; //总页数
+      var pageSize = 5; //每页显示行数
+      //总共分几页
+      if (num / pageSize > parseInt(num / pageSize)) {
+        totalPage = parseInt(num / pageSize) + 1;
+      } else {
+        totalPage = parseInt(num / pageSize);
+      }
+      var currentPage = pno; //当前页数
+      var startRow = (currentPage - 1) * pageSize + 1; //开始显示的行  31
+      var endRow = currentPage * pageSize; //结束显示的行   40
+      endRow = (endRow > num) ? num : endRow; //40
+      //遍历显示数据实现分页
+      for (var i = 1; i < (num + 1); i++) {
+        var irow = itable.rows[i - 1];
+        if (i >= startRow && i <= endRow) {
+          irow.style.display = "table-row";
+        } else {
+          irow.style.display = "none";
+        }
+      }
+      var pageEnd = document.getElementById("pageEnd");
+      var tempStr = "<span class='total'>共" + totalPage + "页</span>";
+      if (currentPage > 1) {
+        tempStr += "<span class='btn spanbtn' href=\"#\" onClick=\"goPager1(" + (1) + ")\">首页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"#\" onClick=\"goPager1(" + (currentPage - 1) + ")\">上一页</span>"
+      } else {
+        tempStr += "<span class='btn spanbtn'>首页</span>";
+        tempStr += "<span class='btn spanbtn'>上一页</span>";
+      }
+
+      if (totalPage == 0) {
+        tempStr += ""
+
+      } else if (totalPage == 1) {
+        tempStr += "<a onclick=\"goPager1(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" + currentPage +
+          "</span></a>"
+
+      } else if (totalPage == 2 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPager1(" + currentPage + ")\"><span class='spanbtn pageicon nowpage'>" + currentPage +
+          "</span></a>" + "<a onclick=\"goPager1(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) + "</span></a>"
+      } else if (totalPage == 2 && currentPage == 2) {
+        tempStr += "<a onclick=\"goPager1(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (currentPage -
+            1) + "</span></a>" + "<a onclick=\"goPager1(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage + "</span></a>"
+      } else if (totalPage >= 3 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPager1(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" + currentPage +
+          "</span></a>" + "<a onclick=\"goPager1(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) +
+          "</span></a>" + "<a onclick=\"goPager1(" + (currentPage + 2) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage + 2) +
+          "</span></a>"
+      } else if (totalPage >= 3 && currentPage == totalPage) {
+        tempStr += "<a onclick=\"goPager1(" + (currentPage - 2) + ")\"><span class='spanbtn pageicon'>" + (currentPage -
+            2) +
+          "</span></a>" + "<a onclick=\"goPager1(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage - 1) +
+          "</span></a>" + "<a onclick=\"goPager1(" + currentPage + ")\"><span class='spanbtn nowpage  pageicon'>" +
+          currentPage +
+          "</span></a>"
+      } else {
+        tempStr += "<a onclick=\"goPager1(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (currentPage -
+            1) +
+          "</span></a>" + "<a onclick=\"goPager1(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager1(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage + 1) +
+          "</span></a>"
+      }
+
+      if (currentPage < totalPage) {
+        tempStr += "<span class='btn spanbtn' href=\"#\" onClick=\"goPager1(" + (currentPage + 1) + ")\">下一页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"#\" onClick=\"goPager1(" + (totalPage) + ")\">尾页</span>";
+      } else {
+        tempStr += "<span class='btn spanbtn'>下一页</span>";
+        tempStr += "<span class='btn spanbtn'>尾页</span>";
+      }
+      document.getElementById("barcon").innerHTML = tempStr;
+
+    }
+
+    function goPager2(pno) {
+      var itable = document.getElementById("tabler2");
+
+      var num = itable.rows.length; //表格所有行数(所有记录数)
+      var totalPage = 7; //总页数
+      var pageSize = 5; //每页显示行数
+      //总共分几页
+      if (num / pageSize > parseInt(num / pageSize)) {
+        totalPage = parseInt(num / pageSize) + 1;
+      } else {
+        totalPage = parseInt(num / pageSize);
+      }
+      var currentPage = pno; //当前页数
+      var startRow = (currentPage - 1) * pageSize + 1; //开始显示的行  31
+      var endRow = currentPage * pageSize; //结束显示的行   40
+      endRow = (endRow > num) ? num : endRow; //40
+      //遍历显示数据实现分页
+      for (var i = 1; i < (num + 1); i++) {
+        var irow = itable.rows[i - 1];
+        if (i >= startRow && i <= endRow) {
+          irow.style.display = "table-row";
+        } else {
+          irow.style.display = "none";
+        }
+      }
+      var pageEnd = document.getElementById("pageEnd");
+      var tempStr = "<span class='total'>共" + totalPage + "页</span>";
+      if (currentPage > 1) {
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPager2(" + (1) + ")\">首页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPager2(" + (currentPage - 1) +
+          ")\">上一页</span>"
+      } else {
+        tempStr += "<span class='btn spanbtn'>首页</span>";
+        tempStr += "<span class='btn spanbtn'>上一页</span>";
+      };
+      if (totalPage == 0) {
+        tempStr += ""
+
+      } else if (totalPage == 1) {
+        tempStr += "<a onclick=\"goPager2(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" + currentPage +
+          "</span></a>"
+
+      } else if (totalPage == 2 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPager2(" + currentPage + ")\"><span class='spanbtn pageicon nowpage'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager2(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) + "</span></a>"
+      } else if (totalPage == 2 && currentPage == 2) {
+        tempStr += "<a onclick=\"goPager2(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            1) + "</span></a>" + "<a onclick=\"goPager2(" + currentPage +
+          ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage + "</span></a>"
+      } else if (totalPage >= 3 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPager2(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager2(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) +
+          "</span></a>" + "<a onclick=\"goPager2(" + (currentPage + 2) + ")\"><span class='spanbtn pageicon'>" +
+          (
+            currentPage + 2) +
+          "</span></a>"
+      } else if (totalPage >= 3 && currentPage == totalPage) {
+        tempStr += "<a onclick=\"goPager2(" + (currentPage - 2) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            2) +
+          "</span></a>" + "<a onclick=\"goPager2(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage - 1) +
+          "</span></a>" + "<a onclick=\"goPager2(" + currentPage +
+          ")\"><span class='spanbtn nowpage  pageicon'>" +
+          currentPage +
+          "</span></a>"
+      } else {
+        tempStr += "<a onclick=\"goPager2(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            1) +
+          "</span></a>" + "<a onclick=\"goPager2(" + currentPage +
+          ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager2(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (
+            currentPage + 1) +
+          "</span></a>"
+      };
+      if (currentPage < totalPage) {
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPager2(" + (currentPage + 1) +
+          ")\">下一页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);javascript:void(0);\" onClick=\"goPager2(" + (
+          totalPage) + ")\">尾页</span>";
+      } else {
+        tempStr += "<span class='btn spanbtn'>下一页</span>";
+        tempStr += "<span class='btn spanbtn'>尾页</span>";
+      }
+      //$("#barconr").hide()
+      document.getElementById("barcon").innerHTML = tempStr;
+
+    }
+
+    function goPager3(pno) {
+      var itable = document.getElementById("tabler3");
+
+      var num = itable.rows.length; //表格所有行数(所有记录数)
+      var totalPage = 7; //总页数
+      var pageSize = 5; //每页显示行数
+      //总共分几页
+      if (num / pageSize > parseInt(num / pageSize)) {
+        totalPage = parseInt(num / pageSize) + 1;
+      } else {
+        totalPage = parseInt(num / pageSize);
+      }
+      var currentPage = pno; //当前页数
+      var startRow = (currentPage - 1) * pageSize + 1; //开始显示的行  31
+      var endRow = currentPage * pageSize; //结束显示的行   40
+      endRow = (endRow > num) ? num : endRow; //40
+      //遍历显示数据实现分页
+      for (var i = 1; i < (num + 1); i++) {
+        var irow = itable.rows[i - 1];
+        if (i >= startRow && i <= endRow) {
+          irow.style.display = "table-row";
+        } else {
+          irow.style.display = "none";
+        }
+      }
+      var pageEnd = document.getElementById("pageEnd");
+      var tempStr = "<span class='total'>共" + totalPage + "页</span>";
+      if (currentPage > 1) {
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPager3(" + (1) + ")\">首页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPager3(" + (currentPage - 1) +
+          ")\">上一页</span>"
+      } else {
+        tempStr += "<span class='btn spanbtn'>首页</span>";
+        tempStr += "<span class='btn spanbtn'>上一页</span>";
+      };
+      if (totalPage == 0) {
+        tempStr += ""
+
+      } else if (totalPage == 1) {
+        tempStr += "<a onclick=\"goPager3(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" + currentPage +
+          "</span></a>"
+
+      } else if (totalPage == 2 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPager3(" + currentPage + ")\"><span class='spanbtn pageicon nowpage'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager3(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) + "</span></a>"
+      } else if (totalPage == 2 && currentPage == 2) {
+        tempStr += "<a onclick=\"goPager3(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            1) + "</span></a>" + "<a onclick=\"goPager3(" + currentPage +
+          ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage + "</span></a>"
+      } else if (totalPage >= 3 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPager3(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager3(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) +
+          "</span></a>" + "<a onclick=\"goPager3(" + (currentPage + 2) + ")\"><span class='spanbtn pageicon'>" +
+          (
+            currentPage + 2) +
+          "</span></a>"
+      } else if (totalPage >= 3 && currentPage == totalPage) {
+        tempStr += "<a onclick=\"goPager3(" + (currentPage - 2) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            2) +
+          "</span></a>" + "<a onclick=\"goPager3(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage - 1) +
+          "</span></a>" + "<a onclick=\"goPager3(" + currentPage +
+          ")\"><span class='spanbtn nowpage  pageicon'>" +
+          currentPage +
+          "</span></a>"
+      } else {
+        tempStr += "<a onclick=\"goPager3(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            1) +
+          "</span></a>" + "<a onclick=\"goPager3(" + currentPage +
+          ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager3(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (
+            currentPage + 1) +
+          "</span></a>"
+      };
+      if (currentPage < totalPage) {
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPager3(" + (currentPage + 1) +
+          ")\">下一页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);javascript:void(0);\" onClick=\"goPager3(" + (
+          totalPage) + ")\">尾页</span>";
+      } else {
+        tempStr += "<span class='btn spanbtn'>下一页</span>";
+        tempStr += "<span class='btn spanbtn'>尾页</span>";
+      }
+      //$("#barconr").hide()
+      document.getElementById("barcon").innerHTML = tempStr;
+
+    }
+
+    //实现分页功能 end**********
+
+
+
+    function goPager(pno) {
+      var itable = document.getElementById("table2");
+
+      var num = itable.rows.length; //表格所有行数(所有记录数)
+      var totalPage = 7; //总页数
+      var pageSize = 5; //每页显示行数
+      //总共分几页
+      if (num / pageSize > parseInt(num / pageSize)) {
+        totalPage = parseInt(num / pageSize) + 1;
+      } else {
+        totalPage = parseInt(num / pageSize);
+      }
+      var currentPage = pno; //当前页数
+      var startRow = (currentPage - 1) * pageSize + 1; //开始显示的行  31
+      var endRow = currentPage * pageSize; //结束显示的行   40
+      endRow = (endRow > num) ? num : endRow; //40
+      //遍历显示数据实现分页
+      for (var i = 1; i < (num + 1); i++) {
+        var irow = itable.rows[i - 1];
+        if (i >= startRow && i <= endRow) {
+          irow.style.display = "table-row";
+        } else {
+          irow.style.display = "none";
+        }
+      }
+      var pageEnd = document.getElementById("pageEnd");
+      var tempStr = "<span class='total'>共" + totalPage + "页</span>";
+      if (currentPage > 1) {
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPager(" + 1 + ")\">首页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPager(" + (currentPage - 1) +
+          ")\">上一页</span>"
+      } else {
+        tempStr += "<span class='btn spanbtn'>首页</span>";
+        tempStr += "<span class='btn spanbtn'>上一页</span>";
+      };
+      if (totalPage == 0) {
+        tempStr += ""
+
+      } else if (totalPage == 1) {
+        tempStr += "<a onclick=\"goPager(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" + currentPage +
+          "</span></a>"
+
+      } else if (totalPage == 2 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPager(" + currentPage + ")\"><span class='spanbtn pageicon nowpage'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) + "</span></a>"
+      } else if (totalPage == 2 && currentPage == 2) {
+        tempStr += "<a onclick=\"goPager(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            1) + "</span></a>" + "<a onclick=\"goPager(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage + "</span></a>"
+      } else if (totalPage >= 3 && currentPage == 1) {
+        tempStr += "<a onclick=\"goPager(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage + 1) +
+          "</span></a>" + "<a onclick=\"goPager(" + (currentPage + 2) + ")\"><span class='spanbtn pageicon'>" +
+          (
+            currentPage + 2) +
+          "</span></a>"
+      } else if (totalPage >= 3 && currentPage == totalPage) {
+        tempStr += "<a onclick=\"goPager(" + (currentPage - 2) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            2) +
+          "</span></a>" + "<a onclick=\"goPager(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" +
+          (currentPage - 1) +
+          "</span></a>" + "<a onclick=\"goPager(" + currentPage + ")\"><span class='spanbtn nowpage  pageicon'>" +
+          currentPage +
+          "</span></a>"
+      } else {
+        tempStr += "<a onclick=\"goPager(" + (currentPage - 1) + ")\"><span class='spanbtn pageicon'>" + (
+            currentPage -
+            1) +
+          "</span></a>" + "<a onclick=\"goPager(" + currentPage + ")\"><span class='spanbtn nowpage pageicon'>" +
+          currentPage +
+          "</span></a>" + "<a onclick=\"goPager(" + (currentPage + 1) + ")\"><span class='spanbtn pageicon'>" +
+          (
+            currentPage + 1) +
+          "</span></a>"
+      };
+      if (currentPage < totalPage) {
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);\" onClick=\"goPager(" + (currentPage + 1) +
+          ")\">下一页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"javascript:void(0);javascript:void(0);\" onClick=\"goPager(" + (
+          totalPage) + ")\">尾页</span>";
+      } else {
+        tempStr += "<span class='btn spanbtn'>下一页</span>";
+        tempStr += "<span class='btn spanbtn'>尾页</span>";
+      }
+      //$("#barconr").hide()
+      document.getElementById("barcon").innerHTML = tempStr;
+
+    }
+  </script>
+  <script>
+    $("input").change(function () {
+      if ($("#txt1").val() == "" && $("#txt2").val() == "" && $("#txt3").val() == "") {
+        window.location.href = "./list.html"
+      }
+      $(".red").hide()
+    })
+  </script>
+</body>
+</html>

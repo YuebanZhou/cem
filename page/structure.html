@@ -1,0 +1,610 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>项目列表</title>
+  <link rel="stylesheet" type="text/css" href="./Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="./Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="./Assets/css/thems.css">
+  <link rel="stylesheet" href="./Assets/css/bootstrap.css">
+
+  <script type="text/javascript" src="./Assets/js/jquery-3.1.0.js"></script>
+  <script src="./Assets/js/bootstrap.js"></script>
+  <script src="./Assets/js/angular.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  body {
+    background-color: #E9E9E9;
+  }
+
+  .part {
+    width: 49%;
+    height: 250px;
+    background-color: #fff;
+    border-radius: 5px;
+    float: left;
+    border: 2px solid #ccc;
+    margin: 10px 0 10px 10px;
+  }
+
+  .part1 {
+    width: 100%;
+    margin: 10px auto;
+    height: 300px;
+  }
+
+  .part2 {
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  .part3 {
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  .part4 {
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  #re {
+    font-size: 15px;
+  }
+
+  .abtn {
+    height: 40px;
+  }
+
+  .ybtn {
+    height: 40px;
+  }
+
+  .yybtn {
+    height: 40px;
+    display: none;
+  }
+
+  .fbtn {
+    height: 40px;
+  }
+
+  .se {
+    width: 230px;
+    height: 30px;
+    margin: 5px;
+  }
+
+  .modal-body {
+    height: 900px;
+  }
+
+  .modal-body .part {
+    border: 1px solid #ccc;
+  }
+
+  /* form {
+    position: relative;
+  }
+  .tbtn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  } */
+
+  .tbtn {
+    height: 40px;
+    margin: 10px;
+  }
+
+  span {
+    font-size: 15px;
+    display: block;
+    float: left;
+  }
+
+  .p1 {
+    height: 30px;
+    margin-left: 20px;
+  }
+
+  .p1 input {
+    border: 0;
+    outline: none;
+  }
+
+  .p2 {
+    height: 30px;
+    margin-left: 20px;
+    position: relative;
+    line-height: 30px;
+  }
+
+  .p12 {
+    height: 30px;
+    margin-left: 20px;
+    position: relative;
+    line-height: 30px;
+  }
+
+  .p2 input.yc {
+    border: 0;
+    outline: none;
+
+  }
+
+  .p3 {
+    height: 30px;
+    margin-left: 20px;
+    line-height: 30px;
+  }
+
+  .p4 {
+    height: 30px;
+    margin-left: 20px;
+    line-height: 30px;
+  }
+
+
+  .p11 {
+    text-align: left;
+  }
+
+  .p2 input {
+    position: absolute;
+    left: 65px;
+    top: 0;
+    height: 23px;
+  }
+
+  select {
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+  }
+
+  .sse1 {
+    width: 320px;
+  }
+
+  .wse1 {
+    width: 320px;
+  }
+
+  .wse2 {
+    width: 320px;
+  }
+
+  .p12 input {
+    height: 25px;
+    border-radius: 5px;
+  }
+
+  .p2 input {
+    height: 25px;
+    border-radius: 5px;
+  }
+
+  #lname {
+    position: absolute;
+    left: 100px;
+    top: 0;
+  }
+
+  #pwd {
+    position: absolute;
+    left: 100px;
+    top: 0;
+  }
+
+  .dis {
+    pointer-events: none;
+  }
+
+  .textarea {
+    height: 90px;
+  }
+
+  #jname {
+    position: absolute;
+    left: 75px;
+
+  }
+
+  #desc {
+    position: absolute;
+    left: 75px;
+  }
+
+  #jenkins_choice {
+    position: absolute;
+    left: 75px;
+
+  }
+
+  .part2 {
+    height: 530px;
+  }
+
+  .red {
+    position: absolute;
+    left: 265px;
+    color: red;
+    font-family: "幼圆";
+    font-size: 12px;
+    display: none;
+  }
+
+  .red1 {
+    top: -4px;
+  }
+
+  .red2 {
+    top: 24px;
+  }
+
+  .return {
+    padding: 5px 25px;
+    background-color: #aaa;
+    border-radius: 4px;
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    color: #000!important;
+    cursor: pointer;
+  text-decoration: none!important;
+
+  }
+</style>
+
+<body ng-app="myApp" ng-controller="ctrl">
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">项目列表</span>
+
+          <a class="return">返回</a>
+        </div>
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+        <div class="fourpart">
+          <!-- 第一部分 -->
+          <div class="part">
+            <h3>项目信息</h3>
+            <div class="p1">
+              <span class="p11">项目名称：</span>
+              <span id="pname">test</span>
+            </div>
+            <div class="p1">
+              <span class="p11">所选分支：</span>
+              <span id="branch">test</span>
+            </div>
+            <div class="p1">
+              <span class="p11">项目提交人：</span>
+              <span id="uname">test</span>
+            </div>
+            <div class="p2">
+              <span>所在路径：</span>
+              <!-- 需要提交 -->
+              <span id="path">test</span>
+            </div>
+            <!--  <div class="p12">
+              <span>gitlab登录名：</span>
+              需要提交
+              <span id="lname">gaiqunfang</span>
+              
+              
+            </div>
+            <div class="p12">
+              <span>gitlab密码：</span>
+              需要提交
+              <span id="pwd">gaiqf48691041</span>
+             
+              
+            </div> -->
+          </div>
+          <!-- 第二部分 -->
+          <div class="part">
+            <h3>发布配置信息</h3>
+            <div class="p2">
+              <span>发布计划：</span>
+              <!-- 需要提交 -->
+              <input type="text" value="" id="jname">
+              <span class="red red1">请填写内容</span>
+            </div>
+            <div class="p2 textarea">
+              <span>发布说明：</span>
+              <!-- 需要提交 -->
+              <!-- <input type="text" value="" id="desc"> -->
+              <textarea rows="3" cols="23" id="desc"></textarea>
+              <span class="red red2">请填写内容</span>
+            </div>
+
+
+            <div class="se jse1 p2">
+              <span>发布模板：</span>
+              <!-- 需要提交 -->
+              <select id="jenkins_choice">
+
+
+              </select>
+            </div>
+          </div>
+          <!-- 第三部分 -->
+          <div class="part">
+            <h3>检查规则</h3>
+
+            <div class="se sse1 p3">
+              <span>sonar检查规则</span>
+              <!-- 需要提交 -->
+              <select id="sonar_choice">
+                <option value="list1">检查规则1</option>
+                <option value="list2">检查规则2</option>
+                <!-- <option value="list3"></option> -->
+              </select>
+            </div>
+
+          </div>
+          <!-- 第四部分 -->
+          <div class="part">
+            <h3>发布环境</h3>
+            <div class="se wse1 p4">
+              <span>发布环境选择</span>
+              <!-- 需要提交 -->
+              <select id="fbseason_choice">
+                <option value="生产环境">生产环境</option>
+                <option value="测试环境">测试环境</option>
+              </select>
+            </div>
+            <div class="se wse2 p4">
+              <span>部署容器选择</span>
+              <!-- 需要提交 -->
+              <select id="bsseason_choice">
+                <option value="tomcat7">tomcat7</option>
+                <!-- <option value="list2">docker</option>   -->
+              </select>
+              <input type="hidden" value="" id="hide">
+            </div>
+          </div>
+          <!-- <a  class="tbtn btn btn-primary btn-lg ">提交</a> -->
+        </div>
+
+        <!-- 模态框 -->
+        <div id="re">
+          <button class="abtn btn dis btn-lg ">构建</button>
+
+          <button type="button" class="ybtn btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            预览
+          </button>
+          <button type="button" class="yybtn btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">
+            预览
+          </button>
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title" id="myModalLabel">构建结果预览</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="part part1">
+                    <h4>项目信息</h4>
+                    <div>项目信息项目信息项目信息项目信息项目信息项目信息项目信息项目信息项目信息</div>
+                  </div>
+                  <div class="part part2">
+                    <h4>发布配置详细信息</h4>
+                    <div class="xml">信息加载失败，请刷新重试</div>
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class=" fbtn btn btn-default" data-dismiss="modal">确定</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+  <!-- angularjs的基本配置 start -->
+  <script>
+    angular.module("myApp", [])
+      .controller("ctrl", function ($scope, $http) {
+        $http({
+          methods: "get",
+          //获取地址
+          //url: "/main/selectJenkinsxml",
+          url: "./Assets/json/structure.json",
+          params: {
+            'devops_id': '1'
+          }
+
+        }).then(function (classes) {
+          $scope.classes = classes.data;
+          $scope.name = classes.data.name;
+          console.log($scope.classes);
+
+          $(".xml").text($scope.classes[0].jenkinsXmlStr)
+          for (var i = 0; i < $scope.classes.length; i++) {
+            var str = "<option value=" + $scope.classes[i].id + ">" + $scope.classes[i].jenkinsname + "</option>";
+            //console.log(str)        	  
+            $("#jenkins_choice").append(str);
+          }
+
+          console.log("请求成功");
+        }, function () {
+          console.log("请求失败");
+        })
+      })
+    //模态框打开过的时候，预览按钮变颜色
+    $(function () {
+      $('#myModal').on('hide.bs.modal', function () {
+        $(".ybtn").hide();
+        $(".yybtn").show();
+
+        if ($("#jname").val() == "" && $("#desc").val() == "") {
+          $(".red1").show()
+          $(".red2").show()
+        } else if ($("#jname").val() != "" && $("#desc").val() == "") {
+          $(".red1").hide()
+          $(".red2").show()
+        } else if ($("#jname").val() == "" && $("#desc").val() != "") {
+          $(".red1").show()
+          $(".red2").hide()
+        } else if ($("#jname").val() != "" && $("#desc").val() != "") {
+          $(".abtn").addClass("btn-primary");
+          $(".abtn").removeClass("dis");
+        }
+
+
+      })
+    });
+
+  </script>
+  <!-- angularjs的基本配置 end -->
+  <!-- 获取本地存储内容渲染到模态框中 start -->
+  <script>
+    window.onload = function (e) {
+
+      var proid = localStorage.getItem("proid");
+      var uname = localStorage.getItem("uname");
+      var pname = localStorage.getItem("pname");
+      var branch = localStorage.getItem("branch");
+      var peo = localStorage.getItem("peo");
+      var path = localStorage.getItem("path");
+
+      var time = localStorage.getItem("time");
+      var msg = localStorage.getItem("msg");
+      var desc = $("#desc").text();
+      var jname = $("#jname").val();
+      //拼接模块中的内容
+      $("#pname").html(pname)
+      $("#branch").html(branch)
+      $("#uname").html(uname)
+      $("#path").html(path)
+      //  拼接模态框中的内容
+      $(".part1 div").html(
+        `<h6 id="gid">项目id：` + proid + `</h6>` +
+        `<h6>用户名：` + uname + `</h6>` +
+        `<h6>项目名称：` + pname + `</h6>` +
+        `<h6>项目所在路径：` + path + `</h6>` +
+        `<h6>项目创建时间：` + time + `</h6>` +
+        `<h6>项目信息：` + msg + `</h6>` +
+        `<h6>项目负责人：` + peo + `</h6>` +
+        `<h6>分支名称：` + branch + `</h6>` +
+        `<h6>发布计划：` + desc + `</h6>` +
+        `<h6>发布说明：` + jname + `</h6>`
+      )
+      $("#hide").val(localStorage.getItem('proid'))
+
+
+
+    }
+  </script>
+  <!-- 获取本地存储内容渲染到模态框中 end -->
+
+  <script>
+    $(".abtn").click(function () {
+      if ($("#fbseason_choice").val() == "测试环境") {
+        var r = confirm("您当前选择的环境是测试环境，确认发布吗？");
+        if (r == true) {
+          window.location.href = "./flow.html"
+        }
+
+      } else {
+        console.log("object");
+        $.ajax({
+          type: "post",
+          url: "/jenkins/addJob",
+          dataType: "json",
+          data: {
+            gitid: $("#hide").val(),
+            //项目描述
+            desc: $("#desc").val(),
+            //分支
+            branch: $("#branch").text(),
+            //提交人
+            peo: $("#uname").text(),
+            //job名称
+            jname: $("#jname").val(),
+            //gitlab登录名
+            lname: $("#lname").text(),
+            //gitlab密码
+            pwd: $("#pwd").text(),
+            //路径
+            path: $("#path").text(),
+            //Jenkins模板选择
+            jenkins_choice: $("#jenkins_choice option:selected").val(),
+            //sonar模板选择
+            sonar_choice: $("#sonar_choice option:selected").val(),
+            //分布环境选择
+            fbseason_choice: $("#fbseason_choice option:selected").val(),
+            //部署环境选择
+            bsseason_choice: $("#bsseason_choice option:selected").val(),
+            gitname: $("#pname").text()
+
+          },
+          success: function (data) {
+            console.log("成功");
+            console.log(data.flag);
+            localStorage.setItem("flag", data.flag);
+            location.href = "./flow.html"
+          },
+          error: function () {
+            console.log("失败");
+          }
+        })
+
+      }
+    })
+    $("#jname").blur(function () {
+      if ($("#jname").val() == "") {
+        $(".red1").show()
+      } else {
+        $(".red1").hide()
+        $("#desc").blur(function () {
+          if ($("#desc").val() == "") {
+            $(".red2").show()
+          } else {
+            $(".red2").hide()
+            $(".abtn").addClass("btn-primary");
+            $(".abtn").removeClass("dis");
+
+          }
+        })
+      }
+    })
+    $("#desc").blur(function () {
+      if ($("#desc").val() == "") {
+        $(".red2").show()
+      } else {
+        $(".red2").hide()
+      }
+    })
+  </script>
+  <script>
+    document.onkeydown = function (e) {
+      e = e || window.event;
+      if (e.keyCode == 116) {
+        e.preventDefault();
+        // window.location.href="./structure.html"
+        //window.history.back(-1);
+        self.location = './structure.html';
+      }
+    }
+    $(".return").click(function () {
+      window.history.back(-1);
+    })
+  </script>
+
+</body>
+
+</html>

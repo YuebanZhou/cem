@@ -1,0 +1,283 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>数据流图</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+  <script src="Assets/js/echarts.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .return {
+    font-size: 20px;
+    display: inline-block;
+    margin: 10px;
+  }
+</style>
+<body>
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">数据流图</span>
+          <a href="./list.html" class="return">返回首页</a>
+        </div>
+        <div class="space_hx">&nbsp;</div>
+      </div>
+      <div id="container" style="height: 100%"></div>
+      <!--会议列表-->
+    </div>
+  </div>
+
+  <script>
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+
+    var data = [{
+        name: 0,
+        value: [10, 10],
+        category: 0
+      },
+      {
+        name: "bb",
+        value: [10, 30],
+        category: 0
+      },
+      {
+        name: "cc",
+        value: [10, 50],
+        category: 0
+      },
+      {
+        name: "dd",
+        value: [30, 10],
+        category: 1
+      },
+      {
+        name: "ee",
+        value: [30, 30],
+        category: 0
+      },
+      {
+        name: "ff",
+        value: [30, 50],
+        category: 0
+      },
+      {
+        name: "gg",
+        value: [50, 10],
+        category: 1
+      },
+      {
+        name: "hh",
+        value: [50, 30],
+        category: 0
+      },
+      {
+        name: "ii",
+        value: [70, 10],
+        category: 0
+      },
+      {
+        name: "jj",
+        value: [70, 30],
+        category: 1
+      },
+      {
+        name: "kk",
+        value: [70, 50],
+        category: 1
+      }
+    ];
+
+    var colors = [
+      '#c23531',
+      '#2f4554',
+      '#61a0a8',
+      '#d48265',
+      '#91c7ae',
+      '#749f83',
+      '#ca8622',
+      '#bda29a',
+      '#6e7074',
+      '#546570',
+      '#c4ccd3'
+    ];
+
+    function getColorPalette(i) {
+      return colors[i];
+    }
+
+    option = {
+      title: {
+        text: '数据流向图'
+      },
+      tooltip: {},
+      xAxis: {
+        show: false,
+        // type : 'category',
+        // boundaryGap : false,
+        // data : axisData
+        type: 'value'
+      },
+      yAxis: {
+        show: false,
+        type: 'value'
+      },
+      dataRange: {
+        min: 0,
+        max: 100,
+        y: '60%',
+        calculable: true,
+        color: ['#ff3333', 'orange', 'yellow', 'lime', 'aqua']
+      },
+      legend: {
+        data: ["AA", "BB"]
+      },
+      series: [{
+        type: 'graph',
+        layout: 'none',
+        coordinateSystem: 'cartesian2d',
+        symbolSize: 40,
+        categories: [{
+            name: 'AA'
+          },
+          {
+            name: 'BB'
+          }
+        ],
+        label: {
+          normal: {
+            show: true
+          }
+        },
+        edgeSymbol: ['circle', 'arrow'],
+        edgeSymbolSize: [4, 10],
+        data: data,
+        itemStyle: {
+          normal: {
+            label: {
+              position: ['20%', '100%'],
+              textStyle: {
+                // color: 'black'
+              }
+            }
+          }
+        },
+        lineStyle: {
+          normal: {
+            color: '#a0a0a0',
+            opacity: 1,
+            width: 2,
+            // curveness: 0.1
+          }
+        }
+      }, {
+        type: 'lines',
+        coordinateSystem: 'cartesian2d',
+        categories: [{
+            name: 'AA'
+          },
+          {
+            name: 'BB'
+          }
+        ],
+        // zlevel: 2,
+        effect: {
+          show: true,
+          smooth: false,
+          trailLength: 0,
+          symbol: "arrow",
+          //color:'rgba(55,155,255,0.5)',
+          symbolSize: 12
+        },
+        lineStyle: {
+          normal: {
+            // color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+            //     offset: 0,
+            //     color: 'rgb(255, 0, 0)'
+            // }, {
+            //     offset: 1,
+            //     color: 'rgb(0, 255, 0)'
+            // }]),
+            // color:'#a0a0a0',
+            color: function () {
+              return getColorPalette(3);
+            }(),
+            width: 2,
+            opacity: 1,
+            // curveness: 0.1//贝塞尔曲线度
+          }
+        },
+        data: [
+          [{
+            coord: [10, 10]
+          }, {
+            coord: [10, 30],
+            lineStyle: {
+              normal: {
+                color: '#dcdcdc'
+              }
+            },
+            category: 0
+          }],
+          [{
+            coord: [10, 30]
+          }, {
+            coord: [30, 30],
+
+          }],
+          [{
+            coord: [30, 30]
+          }, {
+            coord: [50, 30]
+          }],
+          [{
+            coord: [10, 10]
+          }, {
+            coord: [30, 30],
+            value: 12
+          }],
+          [{
+            coord: [10, 10]
+          }, {
+            coord: [30, 50],
+            value: 25
+          }],
+          [{
+            coord: [10, 30]
+          }, {
+            coord: [50, 10],
+            value: 8
+          }],
+          [{
+            coord: [30, 30]
+          }, {
+            coord: [70, 30],
+            value: 4
+          }],
+          [{
+            coord: [30, 10]
+          }, {
+            coord: [70, 10],
+            value: 75
+          }],
+          [{
+            coord: [50, 10]
+          }, {
+            coord: [70, 50],
+            value: 38
+          }]
+        ]
+      }]
+    };
+    myChart.setOption(option, true);
+  </script>
+</body>
+
+</html>

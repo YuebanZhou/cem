@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="./Assets/css/common.css">
+  <link rel="stylesheet" href="./Assets/css/bootstrap.css">
+  <script src="./Assets/js/jquery-3.1.0.js"></script>
+
+  <script src="./Assets/js/bootstrap.js"></script>
+</head>
+
+<body>
+  <div class="head">
+    <div class="logo">devops平台</div>
+    <div class="login">
+      <div class="mimg">
+        <img src="./Assets/images/personal.png" alt="">
+      </div>
+      <div class="time"></div>
+    </div>
+  </div>
+  <div class="contain">
+    <div class="left">
+      <div class="tab">
+        项目管理
+      </div>
+    </div>
+    <div class="con">
+      <div class="top">构建记录</div>
+      <div class="search">
+        <div id="box1">
+          <span>按项目id查询：</span>
+          <input type="text" id="txt1">
+          <div class="se1"></div>
+        </div>
+        <span class="btn" id="btn">搜索</span>
+      </div>
+
+
+      <div class="table">
+        <table class="table table-hover table-bordered">
+          <tr>
+            <td class="list">项目id</td>
+            <td class="list">用户名</td>
+            <td class="list">时间</td>
+            <td class="list">项目信息</td>
+            <td class="list">项目名称</td>
+            <td class="list">项目路径</td>
+            <td class="list">项目状态</td>
+            <td class="list">项目描述</td>
+            <td class="list">负责人</td>
+            <td class="list">构建情况</td>
+          </tr>
+        </table>
+        <table id="result" class="table table-hover table-bordered">
+
+        </table>
+      </div>
+      <div class="foot">
+        <div id="barcon" name="barcon"></div>
+      </div>
+    </div>
+  </div>
+  <script src="./Assets/js/history.js"></script>
+</body>
+
+</html>

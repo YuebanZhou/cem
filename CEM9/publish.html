@@ -1,0 +1,158 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>发布信息</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+  <script src="Assets/js/angular.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  #branch {
+    width: 100px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+  .publish-build a {
+    padding: 5px 15px 5px 15px;
+    background-color: #ccc;
+    margin: 2px;
+    color: #000;
+    border-radius: 5px;
+  }
+
+  .publish-build .g {
+    background-color: rgb(15, 192, 15);
+  }
+
+  #box {
+    position: relative;
+  }
+</style>
+
+<body ng-app="myApp" ng-controller="ctrl">
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">发布信息</span>
+        </div>
+        <!-- 查询-->
+        <!-- <div id="search">
+          <div class="search">
+            <span>按分支名称查询：</span>
+            <div class="s_text" id="box">
+              <input name="" type="text" id="txt">
+            </div>
+            <a href="" class="btn">查询</a>
+          </div>
+
+        </div> -->
+        <!--查询 -->
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+        <form action="" method="post">
+          <table cellpadding="0" cellspacing="0" class="list_hy" id="table2">
+            <tr>
+              <th class="publish-name" scope="col">项目名称</th>
+              <th class="publish-branch" scope="col">分支</th>
+              <th class="publish-time" scope="col">发布时间</th>
+              <th class="publish-peo" scope="col">项目提交人</th>
+              <th class="publish-build" scope="col">构建</th>
+            </tr>
+            <tr ng-repeat="item in classes">
+              <td class="publish-name">{{item.pro.pro_name}}</td>
+              <td class="publish-branch">
+                <select name="" id="branch">
+                  <option value="选择分支">选择分支</option>
+                  <option value="{{item.pro.pro_branch_list.list1}}">{{item.pro.pro_branch_list.list1}}</option>
+                  <option value="{{item.pro.pro_branch_list.list2}}">{{item.pro.pro_branch_list.list2}}</option>
+                  <option value="{{item.pro.pro_branch_list.list3}}">{{item.pro.pro_branch_list.list3}}</option>
+                </select>
+              </td>
+              <td class="publish-time">{{item.time}}</td>
+              <td class="publish-peo">{{item.pro.pro_master}}</td>
+              <td class="publish-build">
+                <!-- <a href="./structure.html" class="g">构建</a> -->
+                <a href="./structure.html" class="g">构建</a>
+              </td>
+            </tr>
+          </table>
+          <!--列表-->
+          <!--右边底部-->
+          <div class="r_foot">
+            <div class="r_foot_m">
+              <!--分页-->
+              <!-- 发布页面不需要分页功能 -->
+              <!--分页-->
+            </div>
+          </div>
+        </form>
+        <!--右边底部-->
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+  <script>
+    var zyApp = angular.module('myApp', []);
+    zyApp.directive('onFinishRender', function ($timeout) {
+      return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+          if (scope.$last === true) {
+            $timeout(function () {
+              scope.$emit('ngRepeatFinished');
+
+            });
+          }
+        }
+      }
+    })
+    zyApp.controller("ctrl", function ($scope, $http) {
+      $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+          var tr = $("#table2 tr");
+          console.log("获取成功");
+          console.log(tr.length);
+        }),
+        $http({
+          methods: "get",
+          url: "./Assets/json/publish.json",
+          params: {
+            'devops_id': '1',
+            'pro_id': '{{item.pro.pro_id}}'
+          }
+
+        }).then(function (classes) {
+          $scope.classes = classes.data;
+          $scope.name = classes.data.name;
+          console.log("请求成功");
+        }, function () {
+          console.log("请求失败");
+        })
+    })
+  </script>
+  <script>
+    window.onload = function () {
+      var tr = $("#table2 tr");
+      for (var i = 0; i < 4; i++) {
+        var temp = tr[1].children[i].innerHTML;
+        //将获取到的列表的内容存储到本地
+        localStorage.setItem("publishkey" + i, temp)
+      }
+      var listtemp=$("#branch").val()
+        localStorage.setItem("publishkey1", listtemp)
+
+
+    }
+  </script>
+
+</body>
+
+</html>

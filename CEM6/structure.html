@@ -1,0 +1,349 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>项目列表</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <link rel="stylesheet" href="Assets/css/bootstrap.css">
+
+  <script type="text/javascript" src="Assets/js/jquery-3.1.0.js"></script>
+  <script src="Assets/js/bootstrap.js"></script>
+  <script src="Assets/js/angular.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  body {
+    background-color: #E9E9E9;
+  }
+
+  .part {
+    width: 49%;
+    height: 250px;
+    background-color: #fff;
+    border-radius: 5px;
+    float: left;
+    border: 2px solid #ccc;
+    margin: 10px 0 10px 10px;
+  }
+  .part1 {
+    width: 100%;
+    margin: 10px auto;
+  }
+  .part2 {
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  .part3 {
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  .part4 {
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  #re {
+    font-size: 15px;
+  }
+
+  .abtn {
+    height: 40px;
+  }
+
+  .ybtn {
+    height: 40px;
+  }
+
+  .yybtn {
+    height: 40px;
+    display: none;
+  }
+
+  .fbtn {
+    height: 40px;
+  }
+
+  .se {
+    width: 200px;
+    height: 30px;
+    margin: 5px;
+  }
+
+  .modal-body {
+    height: 900px;
+  }
+
+  .modal-body .part {
+    border: 1px solid #ccc;
+  }
+
+  /* form {
+    position: relative;
+  }
+  .tbtn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  } */
+
+  .tbtn {
+    height: 40px;
+    margin: 10px;
+  }
+</style>
+
+<body ng-app="myApp" ng-controller="ctrl">
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">项目列表</span>
+        </div>
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+        <div class="fourpart" ng-repeat="item in classes">
+          <form name="input" action="" method="get">
+            <div class="part">
+              <h3>系统管理</h3>
+              <div class="se gse1">
+                <span>下拉框1</span>
+                <select name="gse1" id="">
+                  <option value="list1">{{item.gitlab_list.msg1.list1}}</option>
+                  <option value="list2">{{item.gitlab_list.msg1.list2}}</option>
+                  <option value="list3">{{item.gitlab_list.msg1.list3}}</option>
+                </select>
+              </div>
+              <div class="se gse2">
+                <span>下拉框2</span>
+                <select name="gse2" id="">
+                  <option value="list1">{{item.gitlab_list.msg2.list1}}</option>
+                  <option value="list2">{{item.gitlab_list.msg2.list2}}</option>
+                  <option value="list3">{{item.gitlab_list.msg2.list3}}</option>
+                </select>
+              </div>
+              <div class="se gse3">
+                <span>下拉框3</span>
+                <select name="gse3" id="">
+                  <option value="list1">{{item.gitlab_list.msg3.list1}}</option>
+                  <option value="list2">{{item.gitlab_list.msg3.list2}}</option>
+                  <option value="list3">{{item.gitlab_list.msg3.list3}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="part">
+              <h3>构建参数</h3>
+              <div class="se jse1">
+                <span>地址路径</span>
+                <select name="gitlab_url" id="">
+                  <option value="list1">{{item.jenkins_list.msg1.list1}}</option>
+                  <option value="list2">{{item.jenkins_list.msg1.list2}}</option>
+                  <option value="list3">{{item.jenkins_list.msg1.list3}}</option>
+                </select>
+              </div>
+              <div class="se jse2">
+                <span>项目名称</span>
+                <select name="gitlab_projectname" id="">
+                  <option value="list1">{{item.jenkins_list.msg2.list1}}</option>
+                  <option value="list2">{{item.jenkins_list.msg2.list2}}</option>
+                  <option value="list3">{{item.jenkins_list.msg2.list3}}</option>
+                </select>
+              </div>
+              <div class="se jse3">
+                <span>推荐选项</span>
+                <select name="gitlab_commend" id="">
+                  <option value="list1">{{item.jenkins_list.msg3.list1}}</option>
+                  <option value="list2">{{item.jenkins_list.msg3.list2}}</option>
+                  <option value="list3">{{item.jenkins_list.msg3.list3}}</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="part">
+              <h3>检查规则</h3>
+              <div class="se sse1">
+                <span>下拉框1</span>
+                <select name="sse1" id="">
+                  <option value="list1">{{item.sonar_list.msg1.list1}}</option>
+                  <option value="list2">{{item.sonar_list.msg1.list2}}</option>
+                  <option value="list3">{{item.sonar_list.msg1.list3}}</option>
+                </select>
+              </div>
+              <div class="se sse2">
+                <span>下拉框2</span>
+                <select name="sse2" id="">
+                  <option value="list1">{{item.sonar_list.msg2.list1}}</option>
+                  <option value="list2">{{item.sonar_list.msg2.list2}}</option>
+                  <option value="list3">{{item.sonar_list.msg2.list3}}</option>
+                </select>
+              </div>
+              <div class="se sse3">
+                <span>下拉框3</span>
+                <select name="sse3" id="">
+                  <option value="list1">{{item.sonar_list.msg3.list1}}</option>
+                  <option value="list2">{{item.sonar_list.msg3.list2}}</option>
+                  <option value="list3">{{item.sonar_list.msg3.list3}}</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="part">
+              <h3>发布环境</h3>
+                <div class="se wse1">
+                  <span>下拉框1</span>
+                  <select name="wse1" id="">
+                    <option value="list1">{{item.web_worker.msg1.list1}}</option>
+                    <option value="list2">{{item.web_worker.msg1.list2}}</option>
+                    <option value="list3">{{item.web_worker.msg1.list3}}</option>
+                  </select>
+                </div>
+                <div class="se wse2">
+                  <span>下拉框2</span>
+                  <select name="wse2" id="">
+                    <option value="list1">{{item.web_worker.msg2.list1}}</option>
+                    <option value="list2">{{item.web_worker.msg2.list2}}</option>
+                    <option value="list3">{{item.web_worker.msg2.list3}}</option>
+                  </select>
+                </div>
+                <div class="se wse3">
+                  <span>下拉框3</span>
+                  <select name="wse3" id="">
+                    <option value="list1">{{item.web_worker.msg3.list1}}</option>
+                    <option value="list2">{{item.web_worker.msg3.list2}}</option>
+                    <option value="list3">{{item.web_worker.msg3.list3}}</option>
+                  </select>
+                </div>
+            </div>
+            <input type="submit" value="提交" class="tbtn btn btn-primary btn-lg ">
+            
+          </form>
+
+
+
+        </div>
+
+
+        <!-- 模态框 -->
+        <div id="re">
+          <a href="./flow.html" class="abtn btn btn-primary btn-lg " type="submit">构建</a>
+
+          <button type="button" class="ybtn btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            预览
+          </button>
+          <button type="button" class="yybtn btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">
+            预览
+          </button>
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title" id="myModalLabel">构建结果预览</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="part part1">
+                    <h4>项目信息</h4>
+                    <div>项目信息项目信息项目信息项目信息项目信息项目信息项目信息项目信息项目信息</div>
+                  </div>
+                  <div class="part part2">
+                    <h4>项目分支</h4>
+                    <div>项目分支项目分支项目分支项目分支项目分支项目分支项目分支项目分支项目分支</div>
+                  </div>
+                  <div class="part part3">
+                    <h4>环境信息</h4>
+                    <div>环境信息环境信息环境信息环境信息环境信息环境信息环境信息环境信息环境信息</div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class=" fbtn btn btn-default" data-dismiss="modal">确定</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+  <!-- angularjs的基本配置 start -->
+  <script>
+    angular.module("myApp", [])
+      .controller("ctrl", function ($scope, $http) {
+        $http({
+          methods: "get",
+          url: "./Assets/json/structure.json",
+          params: {
+            'devops_id': '1',
+            'pro_id': '{{item.pro.pro_id}}'
+          }
+
+        }).then(function (classes) {
+          $scope.classes = classes.data;
+          $scope.name = classes.data.name;
+          console.log("请求成功");
+        }, function () {
+          console.log("请求失败");
+        })
+      })
+    //模态框打开过的时候，预览按钮变颜色
+    $(function () {
+      $('#myModal').on('hide.bs.modal', function () {
+        $(".ybtn").hide();
+        $(".yybtn").show();
+      })
+    });
+  </script>
+  <!-- angularjs的基本配置 end -->
+  <!-- 获取本地存储内容渲染到模态框中 start -->
+  <script>
+    window.onload = function () {
+      //项目的id值
+      var proid = parseInt(localStorage.getItem("proid"))-1;
+      console.log(proid);
+      var temp1 = [];
+      var temp2 = [];
+      for (var i = 0; i < 9; i++) {
+        temp1.push(localStorage.getItem("listkey" + proid + i))
+        console.log(temp1);
+      }
+      for (var j = 0; j < 4; j++) {
+        temp2.push(localStorage.getItem("publishkey"+j))
+        console.log(temp1);
+      }
+
+      $(".part1 div").html(
+        `<h6>项目id：`+temp1[0]+`</h6>`+
+        `<h6>用户名：`+temp1[1]+`</h6>`+
+        `<h6>项目名称：`+temp1[2]+`</h6>`+
+        `<h6>项目所在路径：`+temp1[3]+`</h6>`+
+        `<h6>项目版本号：`+temp1[4]+`</h6>`+
+        `<h6>项目当前状态：`+temp1[5]+`</h6>`+
+        `<h6>项目创建时间：`+temp1[6]+`</h6>`+
+        `<h6>项目信息：`+temp1[7]+`</h6>`+
+        `<h6>项目负责人：`+temp1[8]+`</h6>`
+        )
+      $(".part2 div").html(
+        `<h6>项目id：`+temp2[0]+`</h6>`+
+        `<h6>用户名：`+temp2[1]+`</h6>`+
+        `<h6>项目名称：`+temp2[2]+`</h6>`+
+        `<h6>项目所在路径：`+temp2[3]+`</h6>`
+      )
+
+      //提交
+      // $("form").submit(function (e) {
+      //   alert("Submitted");
+      // });
+    }
+  </script>
+  <!-- 获取本地存储内容渲染到模态框中 end -->
+
+</body>
+
+</html>

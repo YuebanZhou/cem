@@ -1,0 +1,206 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>发布信息</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+  <script src="Assets/js/angular.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  #branch {
+    width: 100px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+  .publish-build a {
+    padding: 5px 15px 5px 15px;
+    background-color: #ccc;
+    margin: 2px;
+    color: #000;
+    border-radius: 5px;
+  }
+
+  .publish-build .g {
+    background-color: rgb(15, 192, 15);
+  }
+
+  #box {
+    position: relative;
+  }
+</style>
+
+<body ng-app="myApp" ng-controller="ctrl">
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">发布信息</span>
+        </div>
+        <!--查询-->
+        <div id="search">
+          <div class="search">
+            <span>按分支名称查询：</span>
+            <div class="s_text" id="box">
+              <input name="" type="text" id="txt">
+            </div>
+            <a href="" class="btn">查询</a>
+          </div>
+
+        </div>
+        <!--查询-->
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+        <form action="" method="post">
+          <table cellpadding="0" cellspacing="0" class="list_hy">
+            <tr>
+              <th class="publish-name" scope="col">项目名称</th>
+              <th class="publish-branch" scope="col">分支</th>
+              <th class="publish-time" scope="col">发布时间</th>
+              <th class="publish-peo" scope="col">项目提交人</th>
+              <th class="publish-build" scope="col">构建</th>
+            </tr>
+            <tr ng-repeat="item in classes">
+              <td class="publish-name">{{item.pro.pro_name}}</td>
+              <td class="publish-branch">
+                <select name="" id="branch">
+                  <option value="选择分支">选择分支</option>
+                  <option value="master">{{item.pro.pro_branch_list.list1}}</option>
+                  <option value="master">{{item.pro.pro_branch_list.list2}}</option>
+                  <option value="master">{{item.pro.pro_branch_list.list3}}</option>
+                </select>
+              </td>
+              <td class="publish-time">{{item.time}}</td>
+              <td class="publish-peo">{{item.pro.pro_master}}</td>
+              <td class="publish-build">
+                <a href="./structure.html" class="g">构建</a>
+              </td>
+            </tr>
+          </table>
+          <!--列表-->
+          <!--右边底部-->
+          <div class="r_foot">
+            <div class="r_foot_m">
+              <!--分页-->
+              <div class="page">
+                <a href="" class="prev">
+                  <img src="Assets/images/icon7.png" alt="" />
+                </a>
+                <a class="now">1</a>
+                <a href="">2</a>
+                <a href="">3</a>
+                <a href="">4</a>
+                <a href="">5</a>
+                <a href="">6</a>
+                <a href="" class="next">
+                  <img src="Assets/images/icon8.png" alt="" />
+                </a>
+              </div>
+              <!--分页-->
+            </div>
+          </div>
+        </form>
+        <!--右边底部-->
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+  <script>
+    angular.module("myApp", [])
+      .controller("ctrl", function ($scope, $http) {
+        $http({
+          methods: "get",
+          url: "./Assets/json/publish.json"
+        }).then(function (classes) {
+          $scope.classes = classes.data;
+          $scope.name = classes.data.name;
+          console.log("请求成功");
+        }, function () {
+          console.log("请求失败");
+        })
+      })
+  </script>
+  <script>
+    function zy$(id) {
+      return document.getElementById(id);
+    }
+    //模拟数据
+    var keyWords = ["001", "002", "003", "004"];
+
+    //条件1
+    zy$("txt").onkeyup = function () {
+      //只要键盘抬起就判断.页面中是否存在这个div,如果存在则干掉
+      if (zy$("dv")) {
+        zy$("box").removeChild(zy$("dv"));
+      }
+      //先获取文本框的值
+      var text = this.value;
+      //创建一个临时数组,保存和数组中匹配的字符串
+      //之后用来显示模糊匹配
+      var tempArr = [];
+      //和数组中的每个元素字符串进行对比
+      for (var i = 0; i < keyWords.length; i++) {
+        //关键词的第i个元素，在文本框中出现了
+        //文本框中只匹配第一个元素，就是index为0的元素
+        if (keyWords[i].indexOf(text) >= 0) {
+          //匹配上之后，将这个关键词推到新数组中
+          tempArr.push(keyWords[i]);
+        }
+      }
+      //如果文本框中没有数据或者临时数组中没有数据,就没有必要创建div
+      if (this.value.length == 0 || tempArr.length == 0) {
+        //如果有div就删除
+        if (zy$("dv")) {
+          zy$("box").removeChild(zy$("dv"));
+        }
+        return;
+      }
+      //创建一个div,然后在div中显示对应的内容
+      var dvObj = document.createElement("div");
+      dvObj.id = "dv";
+      zy$("box").appendChild(dvObj);
+      //设置样式
+      dvObj.style.position = "absolute";
+      dvObj.style.left = "-20px";
+      dvObj.style.top = "25px";
+      dvObj.style.backgroundColor = "rgba(200, 200, 200, 0.5)";
+      dvObj.style.width = "90%";
+      //在div中创建p标签,在p标签中显示临时数组中的数据
+      for (var j = 0; j < tempArr.length; j++) {
+        var pobj = document.createElement("p");
+        dvObj.appendChild(pobj);
+        pobj.innerHTML = tempArr[j];
+        pobj.style.color = "#333";
+        pobj.style.width = "100%";
+        pobj.style.height = "40px";
+        pobj.style.margin = "0";
+        pobj.style.padding = "0";
+        pobj.style.cursor = "pointer";
+        pobj.style.fontSize = "15px";
+        //注册鼠标进入和鼠标离开事件
+        pobj.onmouseover = function () {
+          this.style.backgroundColor = "rgba(0,0,0,0.5)";
+        };
+        pobj.onmouseout = function () {
+          this.style.backgroundColor = "";
+        };
+        //点击数组中元素的时候，将临时数组中的值适配到搜索框中
+        pobj.onclick = function () {
+          zy$("txt").value = this.innerText;
+          this.parentNode.parentNode.removeChild(this.parentNode);
+        };
+      }
+
+    };
+  </script>
+
+</body>
+
+</html>

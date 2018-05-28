@@ -1,0 +1,542 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>项目列表</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+  <script src="Assets/js/angular.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .id {
+    width: 5%;
+  }
+
+  /* 用户名 */
+
+  .uname {
+    width: 10%;
+  }
+
+  /* 项目名称 */
+
+  .pname {
+    width: 10%;
+  }
+
+  /* 项目所在路径 */
+
+  .path {
+    width: 10%;
+  }
+
+  /* 项目版本号 */
+
+  .vnum {
+    width: 10%;
+  }
+
+  /* 当前状态 */
+
+  .status {
+    width: 10%;
+  }
+
+  /* 项目创建时间 */
+
+  .time {
+    width: 10%;
+  }
+
+  /* 项目信息 */
+
+  .msg {
+    width: 10%;
+  }
+
+  /* 项目负责人 */
+
+  .peo {
+    width: 10%;
+  }
+
+  /* 项目状态 */
+
+  .jstatus {
+    width: 10%;
+  }
+
+  .jstatus a {
+    padding: 5px;
+    background-color: rgb(15, 192, 15);
+    margin: 2px;
+    color: #000;
+    border-radius: 5px;
+  }
+
+  .jstatus .g {
+    background-color: rgb(15, 192, 15);
+  }
+
+  .jstatus .dis {
+    background-color: #ccc;
+    cursor: wait;
+  }
+
+  #box1 {
+    position: relative;
+
+  }
+
+  #pagination_15 {
+    float: right;
+    margin-right: 20px;
+  }
+
+  .table {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .spanbtn {
+    cursor: pointer;
+  }
+</style>
+
+<body ng-app="myApp" ng-controller="ctrl">
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">项目列表</span>
+        </div>
+        <!--查询-->
+        <div id="search">
+          <div class="search search1">
+            <span>按项目id查询：</span>
+            <div class="s_text" id="box1">
+              <input name="" type="text" id="txt1">
+            </div>
+            <a href="" class="btn">查询</a>
+          </div>
+          <div class="search search2">
+            <span>按项目名称查询：</span>
+            <div class="s_text" id="box2">
+              <input name="" type="text" id="txt2">
+            </div>
+            <a href="" class="btn">查询</a>
+          </div>
+          <div class="search search3">
+            <span>按项目负责人查询：</span>
+            <div class="s_text" id="box3">
+              <input name="" type="text" id="txt3">
+            </div>
+            <a href="" class="btn">查询</a>
+          </div>
+
+        </div>
+
+        <!--查询-->
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+        <form action="" method="post">
+          <table cellpadding="0" cellspacing="0" class="list_hy table">
+            <tr>
+              <th class="id" scope="col">id</th>
+              <th class="uname" scope="col">用户名</th>
+              <th class="pname" scope="col">项目名称</th>
+              <th class="path" scope="col">项目所在路径</th>
+              <th class="vnum" scope="col">项目版本号</th>
+              <th class="status" scope="col">当前状态</th>
+              <th class="time" scope="col">项目创建时间</th>
+              <th class="msg" scope="col">项目信息</th>
+              <th class="peo" scope="col">项目负责人</th>
+              <th class="jstatus" scope="col">项目状态</th>
+            </tr>
+          </table>
+          <table cellpadding="0" cellspacing="0" class="list_hy table" id="table2">
+            <tr ng-repeat="item in classes" on-finish-rende>
+              <td class="id">{{item.pro_id}}</td>
+              <td class="uname">{{item.username}}</td>
+              <td class="pname">{{item.pro.pro_name}}</td>
+              <td class="path">{{item.pro.pro_path}}</td>
+              <td class="vnum">{{item.score.chinese}}</td>
+              <td class="status">{{item.pro.pro_flag}}</td>
+              <td class="time">{{item.time}}</td>
+              <td class="msg">{{item.pro.pro_list}}</td>
+              <td class="peo">{{item.pro.pro_master}}</td>
+              <td class="jstatus">
+                <a href="./history.html" ng-class='{dis:item.pro.pro_flag}'>历史</a>
+                <!-- 这里a标签的跳转路径和id有关系 -->
+                <a href="./publish.html" class="g" ng-click="getid($event)">发布</a>
+              </td>
+              <!-- 类名为.g的按钮是绿色的 -->
+            </tr>
+          </table>
+        </form>
+
+        <!--列表-->
+        <!--右边底部-->
+        <div class="r_foot">
+          <div class="r_foot_m">
+            <!--分页-->
+            <div id="barcon" name="barcon"></div>
+            <!--分页-->
+          </div>
+        </div>
+        <!--右边底部-->
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+  <!-- angualrjs相关配置 start -->
+  <script>
+    var zyApp = angular.module('myApp', []);
+    zyApp.directive('onFinishRender', function ($timeout) {
+      return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+          if (scope.$last === true) {
+            $timeout(function () {
+              scope.$emit('ngRepeatFinished');
+
+            });
+          }
+        }
+      }
+    })
+
+    zyApp.controller("ctrl", function ($scope, $http) {
+      $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+          var tr = $("#table2 tr");
+          console.log("获取成功");
+          console.log(tr.length);
+        }),
+        $http({
+          methods: "get",
+          url: "./Assets/json/list.json",
+          params: {
+            'devops_id': '1'
+          }
+        }).then(function (classes) {
+          $scope.classes = classes.data;
+          $scope.name = classes.data.name;
+          $scope.getid = function($event){
+            console.log("触发成功");
+            //获取当前点击元素的id值
+            var proid=$($event.target).parent().parent().find(".id").text()
+
+          }
+          console.log("请求成功");
+        }, function () {
+          console.log("请求失败");
+        });
+    });
+    
+  </script>
+  <!-- angualrjs相关配置 end -->
+
+  <!-- 将页面中的数据存储到本地 start -->
+  <script>
+    window.onload = function () {
+      console.log("全部加载完毕");
+      var tr = $("#table2 tr");
+      console.log(tr.length);
+      goPage(1);
+      // localStorage.clear();
+      //每行9个元素
+      for (var i = 0; i < 9; i++) {
+        //行数为tr的条数，排除第一行
+        for (var j = 0; j < tr.length; j++) {
+          var temp = tr[j].children[i].innerHTML;
+          //将获取到的列表的内容存储到本地
+          localStorage.setItem("listkey" + j + i, temp)
+        }
+      }
+
+    }
+  </script>
+  <!-- 将页面中的数据存储到本地 end -->
+
+  <!-- 实现分页功能 start -->
+  <script>
+    function goPage(pno) {
+      var itable = document.getElementById("table2");
+
+      var num = itable.rows.length; //表格所有行数(所有记录数)
+      console.log(num);
+      var totalPage = 0; //总页数
+      var pageSize = 5; //每页显示行数
+      //总共分几页
+      if (num / pageSize > parseInt(num / pageSize)) {
+        totalPage = parseInt(num / pageSize) + 1;
+      } else {
+        totalPage = parseInt(num / pageSize);
+      }
+      var currentPage = pno; //当前页数
+      var startRow = (currentPage - 1) * pageSize + 1; //开始显示的行  31
+      var endRow = currentPage * pageSize; //结束显示的行   40
+      endRow = (endRow > num) ? num : endRow; //40
+      console.log(endRow);
+      //遍历显示数据实现分页
+      for (var i = 1; i < (num + 1); i++) {
+        var irow = itable.rows[i - 1];
+        if (i >= startRow && i <= endRow) {
+          irow.style.display = "table-row";
+        } else {
+          irow.style.display = "none";
+        }
+      }
+      var pageEnd = document.getElementById("pageEnd");
+      var tempStr = "<span>共" + totalPage + "页</span>";
+
+
+      //.bind("click",{"newPage":pageIndex},function(event){
+      //        goPage((pageIndex-1)*pageSize+1,(pageIndex-1)*pageSize+pageSize);
+      //    }).appendTo('#pages');
+      if (currentPage > 1) {
+        tempStr += "<span class='btn spanbtn' href=\"#\" onClick=\"goPage(" + (1) + ")\">首页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"#\" onClick=\"goPage(" + (currentPage - 1) + ")\">上一页</span>"
+      } else {
+        tempStr += "<span class='btn spanbtn'>首页</span>";
+        tempStr += "<span class='btn spanbtn'>上一页</span>";
+      }
+
+      for (var pageIndex = 1; pageIndex < totalPage + 1; pageIndex++) {
+        tempStr += "<a onclick=\"goPage(" + pageIndex + ")\"><span class='spanbtn'>" + pageIndex + "</span></a>";
+      }
+
+      if (currentPage < totalPage) {
+        tempStr += "<span class='btn spanbtn' href=\"#\" onClick=\"goPage(" + (currentPage + 1) + ")\">下一页</span>";
+        tempStr += "<span class='btn spanbtn' href=\"#\" onClick=\"goPage(" + (totalPage) + ")\">尾页</span>";
+      } else {
+        tempStr += "<span class='btn spanbtn'>下一页</span>";
+        tempStr += "<span class='btn spanbtn'>尾页</span>";
+      }
+
+      document.getElementById("barcon").innerHTML = tempStr;
+
+    }
+  </script>
+  <!-- 实现分页功能 end -->
+  <!-- 实现查询功能 start -->
+  <script>
+    function zy$(id) {
+      return document.getElementById(id);
+    }
+    //模拟数据
+    var keyWords1 = ["001", "002", "003", "004"];
+    var keyWords2 = ["名称1", "名称2", "名称3", "名称4"];
+    var keyWords3 = ["负责人1", "负责人2", "负责人3", "负责人4"];
+
+    //条件1
+    zy$("txt1").onkeyup = function () {
+      //只要键盘抬起就判断.页面中是否存在这个div,如果存在则干掉
+      if (zy$("dv1")) {
+        zy$("box1").removeChild(zy$("dv1"));
+      }
+      //先获取文本框的值
+      var text = this.value;
+      //创建一个临时数组,保存和数组中匹配的字符串
+      //之后用来显示模糊匹配
+      var tempArr = [];
+      //和数组中的每个元素字符串进行对比
+      for (var i = 0; i < keyWords1.length; i++) {
+        //关键词的第i个元素，在文本框中出现了
+        //文本框中只匹配第一个元素，就是index为0的元素
+        if (keyWords1[i].indexOf(text) >= 0) {
+          //匹配上之后，将这个关键词推到新数组中
+          tempArr.push(keyWords1[i]);
+        }
+      }
+      //如果文本框中没有数据或者临时数组中没有数据,就没有必要创建div
+      if (this.value.length == 0 || tempArr.length == 0) {
+        //如果有div就删除
+        if (zy$("dv1")) {
+          zy$("box1").removeChild(zy$("dv1"));
+        }
+        return;
+      }
+      //创建一个div,然后在div中显示对应的内容
+      var dvObj = document.createElement("div");
+      dvObj.id = "dv1";
+      zy$("box1").appendChild(dvObj);
+      //设置样式
+      dvObj.style.position = "absolute";
+      dvObj.style.left = "-20px";
+      dvObj.style.top = "25px";
+      dvObj.style.backgroundColor = "rgba(200, 200, 200, 0.5)";
+      dvObj.style.width = "90%";
+      //在div中创建p标签,在p标签中显示临时数组中的数据
+      for (var j = 0; j < tempArr.length; j++) {
+        var pobj = document.createElement("p");
+        dvObj.appendChild(pobj);
+        pobj.innerHTML = tempArr[j];
+        pobj.style.color = "#333";
+        pobj.style.width = "100%";
+        pobj.style.height = "40px";
+        pobj.style.margin = "0";
+        pobj.style.padding = "0";
+        pobj.style.cursor = "pointer";
+        pobj.style.fontSize = "15px";
+        //注册鼠标进入和鼠标离开事件
+        pobj.onmouseover = function () {
+          this.style.backgroundColor = "rgba(0,0,0,0.5)";
+        };
+        pobj.onmouseout = function () {
+          this.style.backgroundColor = "";
+        };
+        //点击数组中元素的时候，将临时数组中的值适配到搜索框中
+        pobj.onclick = function () {
+          zy$("txt1").value = this.innerText;
+          this.parentNode.parentNode.removeChild(this.parentNode);
+        };
+      }
+
+    };
+    //条件2
+    zy$("txt2").onkeyup = function () {
+      //只要键盘抬起就判断.页面中是否存在这个div,如果存在则干掉
+      if (zy$("dv2")) {
+        zy$("box2").removeChild(zy$("dv2"));
+      }
+      //先获取文本框的值
+      var text = this.value;
+      //创建一个临时数组,保存和数组中匹配的字符串
+      //之后用来显示模糊匹配
+      var tempArr = [];
+      //和数组中的每个元素字符串进行对比
+      for (var i = 0; i < keyWords2.length; i++) {
+        //关键词的第i个元素，在文本框中出现了
+        //文本框中只匹配第一个元素，就是index为0的元素
+        if (keyWords2[i].indexOf(text) >= 0) {
+          //匹配上之后，将这个关键词推到新数组中
+          tempArr.push(keyWords2[i]);
+        }
+      }
+      //如果文本框中没有数据或者临时数组中没有数据,就没有必要创建div
+      if (this.value.length == 0 || tempArr.length == 0) {
+        //如果有div就删除
+        if (zy$("dv2")) {
+          zy$("box2").removeChild(zy$("dv2"));
+        }
+        return;
+      }
+      //创建一个div,然后在div中显示对应的内容
+      var dvObj = document.createElement("div");
+      dvObj.id = "dv2";
+      zy$("box2").appendChild(dvObj);
+      //设置样式
+      dvObj.style.position = "absolute";
+      dvObj.style.left = "-20px";
+      dvObj.style.top = "25px";
+      dvObj.style.backgroundColor = "rgba(200, 200, 200, 0.5)";
+      dvObj.style.width = "90%";
+      //在div中创建p标签,在p标签中显示临时数组中的数据
+      for (var j = 0; j < tempArr.length; j++) {
+        var pobj = document.createElement("p");
+        dvObj.appendChild(pobj);
+        pobj.innerHTML = tempArr[j];
+        pobj.style.color = "#333";
+        pobj.style.width = "100%";
+        pobj.style.height = "40px";
+        pobj.style.margin = "0";
+        pobj.style.padding = "0";
+        pobj.style.cursor = "pointer";
+        pobj.style.fontSize = "15px";
+        //注册鼠标进入和鼠标离开事件
+        pobj.onmouseover = function () {
+          this.style.backgroundColor = "rgba(0,0,0,0.5)";
+        };
+        pobj.onmouseout = function () {
+          this.style.backgroundColor = "";
+        };
+        //点击数组中元素的时候，将临时数组中的值适配到搜索框中
+        pobj.onclick = function () {
+          zy$("txt2").value = this.innerText;
+          this.parentNode.parentNode.removeChild(this.parentNode);
+        };
+      }
+
+    };
+    //条件3
+    zy$("txt3").onkeyup = function () {
+      //只要键盘抬起就判断.页面中是否存在这个div,如果存在则干掉
+      if (zy$("dv3")) {
+        zy$("box3").removeChild(zy$("dv3"));
+      }
+      //先获取文本框的值
+      var text = this.value;
+      //创建一个临时数组,保存和数组中匹配的字符串
+      //之后用来显示模糊匹配
+      var tempArr = [];
+      //和数组中的每个元素字符串进行对比
+      for (var i = 0; i < keyWords3.length; i++) {
+        //关键词的第i个元素，在文本框中出现了
+        //文本框中只匹配第一个元素，就是index为0的元素
+        if (keyWords3[i].indexOf(text) >= 0) {
+          //匹配上之后，将这个关键词推到新数组中
+          tempArr.push(keyWords3[i]);
+        }
+      }
+      //如果文本框中没有数据或者临时数组中没有数据,就没有必要创建div
+      if (this.value.length == 0 || tempArr.length == 0) {
+        //如果有div就删除
+        if (zy$("dv3")) {
+          zy$("box3").removeChild(zy$("dv3"));
+        }
+        return;
+      }
+      //创建一个div,然后在div中显示对应的内容
+      var dvObj = document.createElement("div");
+      dvObj.id = "dv3";
+      zy$("box3").appendChild(dvObj);
+      //设置样式
+      dvObj.style.position = "absolute";
+      dvObj.style.left = "-20px";
+      dvObj.style.top = "25px";
+      dvObj.style.backgroundColor = "rgba(200, 200, 200, 0.5)";
+      dvObj.style.width = "90%";
+      //在div中创建p标签,在p标签中显示临时数组中的数据
+      for (var j = 0; j < tempArr.length; j++) {
+        var pobj = document.createElement("p");
+        dvObj.appendChild(pobj);
+        pobj.innerHTML = tempArr[j];
+        pobj.style.color = "#333";
+        pobj.style.width = "100%";
+        pobj.style.height = "40px";
+        pobj.style.margin = "0";
+        pobj.style.padding = "0";
+        pobj.style.cursor = "pointer";
+        pobj.style.fontSize = "15px";
+        //注册鼠标进入和鼠标离开事件
+        pobj.onmouseover = function () {
+          this.style.backgroundColor = "rgba(0,0,0,0.5)";
+        };
+        pobj.onmouseout = function () {
+          this.style.backgroundColor = "";
+        };
+        //点击数组中元素的时候，将临时数组中的值适配到搜索框中
+        pobj.onclick = function () {
+          zy$("txt3").value = this.innerText;
+          this.parentNode.parentNode.removeChild(this.parentNode);
+        };
+      }
+
+    };
+  </script>
+  <!-- 实现查询功能 end -->
+  <!-- 点击的时候，获取这一行的id start -->
+  <script>
+
+  </script>
+  <!-- 点击的时候，获取这一行的id end -->
+</body>
+
+
+</html>

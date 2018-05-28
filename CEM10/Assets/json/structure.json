@@ -1,0 +1,13 @@
+[{
+  "jenkins_list": {
+    "msg1": ["jenkins1","jenkins2","jenkins3"]
+  },
+  "sonar_list": {
+    "msg1": ["sonar1","sonar2","sonar3","sonar4","sonar5"]
+  },
+  "web_worker": {
+    "msg1": ["web_worker11","web_worker12","web_worker13"],
+    "msg2": ["web_worker21"]
+
+  }
+}]

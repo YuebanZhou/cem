@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>提交记录</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .p {
+    text-align: left;
+  }
+  .stmp {
+    display: none;
+  }
+</style>
+<body>
+  <!-- <h3>这里是大屏展示</h3> -->
+  <!-- <div>存放数据的地方</div> -->
+  <div class="stmp">
+    Started by user [8mha:////4CJv7qQ2BO7l2qYeYKYv4me2FcRXvpBIp+8TePCzFS88AAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9xJTczDwAj6GcLcAAAAA=[0mgaiqf Building in workspace C:\Users\Administrator.VAIOHC\.jenkins\workspace\message Cloning the remote Git repository Cloning repository http://10.162.156.33/gaiqunfang/message.git 
+
+  > git.exe init C:\Users\Administrator.VAIOHC\.jenkins\workspace\message # timeout=10 Fetching upstream changes from http://10.162.156.33/gaiqunfang/message.git 
+ 
+  > git.exe --version # timeout=10 using GIT_ASKPASS to set credentials gaiqf_user&psw > git.exe fetch --tags --progress http://10.162.156.33/gaiqunfang/message.git 
+ 
+  +refs/heads/*:refs/remotes/origin/* > git.exe config remote.origin.url http://10.162.156.33/gaiqunfang/message.git 
+ 
+  # timeout=10 > git.exe config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10 > git.exe config remote.origin.url http://10.162.156.33/gaiqunfang/message.git 
+ 
+  # timeout=10 Fetching upstream changes from http://10.162.156.33/gaiqunfang/message.git 
+ 
+  using GIT_ASKPASS to set credentials gaiqf_user&psw > git.exe fetch --tags --progress http://10.162.156.33/gaiqunfang/message.git 
+ 
+  +refs/heads/*:refs/remotes/origin/* > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10 > git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10 Checking out Revision ca07b90912d6c112cf0c0d8b28b5f2ea0922b17e (refs/remotes/origin/master) > git.exe config core.sparsecheckout # timeout=10 > git.exe checkout -f ca07b90912d6c112cf0c0d8b28b5f2ea0922b17e Commit message: "Update MysqlDB.java" First time build. Skipping changelog. Finished: SUCCESS
+  </div>
+  <div class="p"></div>
+  <script>
+    console.log($("div").html());
+    var arr=$("div").html().split("&gt;")
+    //console.log(arr);
+    for(var i=0;i<arr.length;i++) {
+      $(".p").append("<p>"+arr[i]+"</p><br>")
+    }
+    // $.ajax({
+    //   type: "post",
+    //   dataType: "json",
+    //   url: "./Assets/json/screen.json",
+    //   success: function (result) {
+    //     $("div").text(result.log)
+    //     $("div").text(result[0].log)
+    //     result.replace("你自己设置的或者是规定的换行的转义字符","\n\t");
+    //     console.log("成功");
+    //   },
+    //   error: function () {
+    //     console.log("失败");
+    //   }
+    // })
+  </script>
+</body>
+
+</html>

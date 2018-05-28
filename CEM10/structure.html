@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="./Assets/css/common.css">
+  <link rel="stylesheet" href="./Assets/css/bootstrap.css">
+  <script src="./Assets/js/jquery-3.1.0.js"></script>
+
+  <script src="./Assets/js/bootstrap.js"></script>
+</head>
+
+<body>
+  <div class="head">
+    <div class="logo">devops平台</div>
+    <div class="login">
+      <div class="mimg">
+        <img src="./Assets/images/personal.png" alt="">
+      </div>
+      <div class="time"></div>
+    </div>
+  </div>
+  <div class="contain">
+    <div class="left">
+      <div class="tab">
+        项目管理
+      </div>
+    </div>
+    <div class="con">
+      <div class="top">项目信息</div>
+      <div class="partfour">
+        <div class="part1 part">
+          <h4>项目信息</h4>
+          <p class="p11"></p>
+          <p class="p13"></p>
+          <p class="p14"></p>
+          <p class="p15"></p>
+          <p class="p16"></p>
+          <p class="p17"></p>
+          <p class="p18"></p>
+          <p class="p19"></p>
+        </div>
+        <div class="part2 part">
+          <h4>构建参数</h4>
+          <p class="p21">
+            Job名称：
+            <input type="text">
+          </p>
+          <p class="p22">
+            项目说明：
+            <input type="text">
+          </p>
+          <p class="p23">github登录名</p>
+          <p class="p24">github密码</p>
+          <p class="p25">所在路径</p>
+          <p class="p26">
+            jenkins构建模板选择
+            <select name="" id="p26">
+              <option value="">请选择</option>
+            </select>
+          </p>
+        </div>
+        <div class="part3 part">
+          <h4>检查规则</h4>
+          <p class="p31">
+            sonar检查模板规则
+            <select name="" id="p31" class="p31">
+              <option value="">请选择</option>
+            </select>
+          </p>
+        </div>
+        <div class="part4 part">
+          <h4>发布环境</h4>
+          <p class="p41">
+            发布环境选择
+            <select name="" id="p41">
+              <option value="">请选择</option>
+            </select>
+          </p>
+          <p class="p42">
+            部署容器选择
+            <select name="" id="p42">
+              <option value="">请选择</option>
+            </select>
+          </p>
+
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary rbtn1" data-toggle="modal" data-target=".bs-example-modal-lg">预览</button>
+      <button type="button" class="btn btn-primary rbtn2">构建</button>
+
+    </div>
+  </div>
+  <div class="review">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="mp1 mp"></div>
+          <div class="mp2 mp"></div>
+          <div class="mp3 mp"></div>
+          <div class="mp4 mp"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./Assets/js/structure.js"></script>
+</body>
+
+</html>

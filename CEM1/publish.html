@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>发布信息</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  #branch {
+    width: 100px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+  .publish-build a {
+    padding: 5px 15px 5px 15px;
+    background-color: #ccc;
+    margin: 2px;
+    color: #000;
+    border-radius: 5px;
+  }
+
+  .publish-build .g {
+    background-color: rgb(15, 192, 15);
+  }
+</style>
+
+<body>
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">发布信息</span>
+        </div>
+        <!--查询-->
+        <div id="search">
+          <div class="search">
+            <span>按分支名称查询：</span>
+            <div class="s_text">
+              <input name="" type="text">
+            </div>
+            <a href="" class="btn">查询</a>
+          </div>
+
+        </div>
+        <!--查询-->
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+        <form action="" method="post">
+          <table cellpadding="0" cellspacing="0" class="list_hy">
+            <tr>
+              <th class="publish-name" scope="col">项目名称</th>
+              <th class="publish-branch" scope="col">分支</th>
+              <th class="publish-time" scope="col">发布时间</th>
+              <th class="publish-peo" scope="col">项目提交人</th>
+              <th class="publish-build" scope="col">构建</th>
+            </tr>
+            <tr>
+              <td class="publish-name"></td>
+              <td class="publish-branch">
+                <select name="" id="branch">
+                  <option value="选择分支">选择分支</option>
+                  <option value="master">master</option>
+                  <option value="master">master</option>
+                  <option value="master">master</option>
+                  <option value="master">master</option>
+                </select>
+              </td>
+              <td class="publish-time"></td>
+              <td class="publish-peo"></td>
+              <td class="publish-build">
+                <a href="./structure.html" class="g">构建</a>
+              </td>
+            </tr>
+          </table>
+          <!--列表-->
+          <!--右边底部-->
+          <div class="r_foot">
+            <div class="r_foot_m">
+              <!--分页-->
+              <div class="page">
+                <a href="" class="prev">
+                  <img src="Assets/images/icon7.png" alt="" />
+                </a>
+                <a class="now">1</a>
+                <a href="">2</a>
+                <a href="">3</a>
+                <a href="">4</a>
+                <a href="">5</a>
+                <a href="">6</a>
+                <a href="" class="next">
+                  <img src="Assets/images/icon8.png" alt="" />
+                </a>
+              </div>
+              <!--分页-->
+            </div>
+          </div>
+        </form>
+        <!--右边底部-->
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+</body>
+
+</html>

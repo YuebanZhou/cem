@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>项目列表</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+
+  <!--框架高度设置-->
+</head>
+<style>
+
+</style>
+
+<body>
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">详细信息</span>
+        </div>
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+          <table cellpadding="0" cellspacing="0" class="list_hy table" id="result">
+            <tr>
+              <th class="id" scope="col">标题</th>
+              <th class="uname" scope="col">提交人</th>
+              <th class="pname" scope="col">提交时间</th>
+              <th class="path" scope="col">创建时间</th>
+              <th class="vnum" scope="col">提交信息</th>
+            </tr>
+          </table>
+
+        <!--列表-->
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+
+  <script>
+    $.ajax({
+      type: "post",
+      dataType: "json",
+      url: "./Assets/json/list.json",
+      success: function (result) {
+        console.log(result);
+        var s = '';
+        for (var i = 0; i < result.length; i++) {
+          s +=
+            `
+            <tr>
+              <td >` + result[i].pro_id +`</td>
+              <td >` + result[i].time +`</td>
+              <td >` + result[i].username +`</td>
+              <td >` + result[i].pro.pro_info +`</td>
+              <td >` + result[i].pro.pro_master +`</td>
+              <td >` + result[i].pro.pro_name +`</td>
+              <td >` + result[i].pro.pro_path +`</td>
+            </tr>
+
+            `;
+        }
+        $('#result').append(s);
+      },
+      error: function () {
+        console.log("失败");
+      }
+    })
+
+  </script>
+
+
+</body>
+
+
+</html>

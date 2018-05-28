@@ -1,0 +1,163 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<title>发布信息</title>
+<link rel="stylesheet" type="text/css" href="./Assets/css/reset.css" />
+<link rel="stylesheet" type="text/css" href="./Assets/css/common.css" />
+<link rel="stylesheet" type="text/css" href="./Assets/css/thems.css">
+<script type="text/javascript" src="./Assets/js/jquery-1.8.3.min.js"></script>
+<script src="./Assets/js/angular.js"></script>
+<!--框架高度设置-->
+</head>
+<style>
+#branch {
+	width: 100px;
+	height: 30px;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+.publish-build a {
+	padding: 5px 15px 5px 15px;
+	background-color: #ccc;
+	margin: 2px;
+	color: #000;
+	border-radius: 5px;
+}
+
+.publish-build .g {
+	background-color: rgb(15, 192, 15);
+}
+
+#box {
+	position: relative;
+}
+.return {
+  padding: 5px 25px;
+  background-color: #aaa;
+  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  color: #000;
+  cursor: pointer;
+}
+</style>
+
+<body ng-app="myApp" ng-controller="ctrl">
+	<div id="right_ctn">
+		<div class="right_m">
+			<!--会议列表-->
+			<div class="hy_list">
+				<div class="box_t">
+          <span class="name">发布信息</span>
+          <a class="return">返回</a>
+				</div>
+
+				<div class="space_hx">&nbsp;</div>
+				<!--列表-->
+				<form action="" method="post">
+					<table cellpadding="0" cellspacing="0" class="list_hy">
+						<tr>
+							<th class="publish-name" scope="col">项目名称</th>
+							<th class="publish-branch" scope="col">分支</th>
+							
+							
+							<th class="publish-build" scope="col">构建</th>
+						</tr>
+						<tr>
+							<td class="publish-name" id="publish-name"></td>
+							<td class="publish-branch" id="publish-branch">
+							<select name="" id="branch">
+								
+							</select>
+							</td>
+							
+							
+							<td class="publish-build"><a href="./structure.html"
+								class="g">构建</a></td>
+						</tr>
+					</table>
+					<!--列表-->
+
+				</form>
+				<!--右边底部-->
+			</div>
+			<!--会议列表-->
+		</div>
+	</div>
+	<script>
+	var num=localStorage.getItem("vnum");
+    var zyApp = angular.module('myApp', []);
+    zyApp.directive('onFinishRender', function ($timeout) {
+      return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+          if (scope.$last === true) {
+            $timeout(function () {
+              scope.$emit('ngRepeatFinished');
+
+            });
+          }
+        }
+      }
+    })
+    zyApp.controller("ctrl", function ($scope, $http) {
+      $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+          var tr = $("#table2 tr");
+          console.log("获取成功");
+          console.log(tr.length);
+          
+        }),
+        $http({        	
+          methods: "get",
+          //url: "http://10.162.156.33/api/v4/projects/"+num+"/repository/branches",
+          url:"./Assets/json/publish.json",
+          params: {
+            'devops_id': '1'
+          }
+
+        }).then(function (classes) {
+        	
+          $scope.classes = classes.data;
+          $scope.name= classes.data.name;  
+          
+          var pname = localStorage.getItem("pname");     		
+          $("#publish-name").text(pname)        	  
+         
+          for(var i=0;i<$scope.classes.length;i++){
+        	  var str="<option>"+$scope.classes[i].name+"</option>";
+        	  console.log(str)        	  
+        	  $("#branch").append(str);        	  
+          }
+          var text=$("#branch option:selected").val()
+          console.log(text)
+			localStorage.setItem("branch", text);
+          console.log("请求成功");
+        }, function () {
+          console.log("请求失败");
+        })
+    })
+  </script>
+  <script>
+    document.onkeydown=function(e){
+      e=e||window.event;
+      if(e.keyCode==116){
+        e.preventDefault();
+        // window.location.href="./publish.html"
+        //window.history.back(-1);
+        self.location='./publish.html';
+      }
+    }
+    $(".return").click(function(){
+      window.history.back(-1);
+    })
+  </script>
+
+
+
+</body>
+
+</html>

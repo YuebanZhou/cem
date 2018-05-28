@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>提交记录</title>
+  <link rel="stylesheet" type="text/css" href="./Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="./Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="./Assets/css/thems.css">
+  <script type="text/javascript" src="./Assets/js/jquery-1.8.3.min.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .p {
+    width: 90%;
+    word-break: break-all;
+    text-align: left;
+    margin: 10px;
+  }
+
+  h3 {
+    color: #3D89CB;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .return {
+  padding: 5px 25px;
+  background-color: #aaa;
+  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  color: #000;
+  cursor: pointer;
+}
+</style>
+
+<body>
+  <div class="temp">存放数据的地方</div>
+  <a class="return">返回</a>
+  <h3>构建日志结果</h3>
+  <div class="p"></div>
+  <script>
+    window.onload = function () {
+      var flag = localStorage.getItem("history-result")
+      if (flag == "成功") {
+        console.log("构建成功");
+        $.ajax({
+          type: "post",
+          dataType: "json",
+          url: "/jenkins/showJenkinsLogInfo",
+          
+          success: function (result) {
+            $(".temp").text(result)
+            var arr = $(".temp").html().split("&gt;")
+            $(".temp").css("display", "none")
+            console.log(arr);
+            for (var i = 0; i < arr.length; i++) {
+              $(".p").append("<p>" + arr[i] + "</p><br>")
+            }
+            console.log(result);
+            console.log("成功");
+          },
+          error: function () {
+            console.log("失败");
+          }
+        })
+
+      } else if (flag == "失败") {
+        console.log("构建失败");
+        $.ajax({
+          type: "post",
+          dataType: "json",
+          url: "/jenkins/showJenkinsLogInfo",
+          
+          success: function (result) {
+            $(".temp").text(result)
+            var arr = $(".temp").html().split("&gt;")
+            $(".temp").css("display", "none")
+            console.log(arr);
+            for (var i = 0; i < arr.length; i++) {
+              $(".p").append("<p>" + arr[i] + "</p><br>")
+            }
+            console.log(result);
+            console.log("成功");
+          },
+          error: function () {
+            console.log("失败");
+          }
+        })
+
+      }
+
+    }
+  </script>
+  <script>
+    document.onkeydown = function (e) {
+      e = e || window.event;
+      if (e.keyCode == 116) {
+        e.preventDefault();
+        // window.location.href="./screen.html"
+        //window.history.back(-1);
+        self.location = './screen.html';
+      }
+    }
+    $(".return").click(function(){
+      window.history.back(-1);
+    })
+  </script>
+
+</body>
+
+</html>

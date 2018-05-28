@@ -1,0 +1,298 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <title>项目列表</title>
+  <link rel="stylesheet" type="text/css" href="Assets/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+  <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+  <script src="Assets/js/angular.js"></script>
+  <!--框架高度设置-->
+</head>
+<style>
+  .id {
+    width: 5%;
+  }
+
+  /* 用户名 */
+
+  .uname {
+    width: 10%;
+  }
+
+  /* 项目名称 */
+
+  .pname {
+    width: 10%;
+  }
+
+  /* 项目所在路径 */
+
+  .path {
+    width: 10%;
+  }
+
+  /* 项目版本号 */
+
+  .vnum {
+    width: 10%;
+  }
+
+  /* 当前状态 */
+
+  .status {
+    width: 10%;
+  }
+
+  /* 项目创建时间 */
+
+  .time {
+    width: 10%;
+  }
+
+  /* 项目信息 */
+
+  .msg {
+    width: 10%;
+  }
+
+  /* 项目负责人 */
+
+  .peo {
+    width: 10%;
+  }
+
+  /* 项目状态 */
+
+  .jstatus {
+    width: 10%;
+  }
+
+  .jstatus a {
+    padding: 5px;
+    background-color: rgb(15, 192, 15);
+    margin: 2px;
+    color: #000;
+    border-radius: 5px;
+  }
+
+  .jstatus .g {
+    background-color: rgb(15, 192, 15);
+  }
+
+  .jstatus .dis {
+    background-color: #ccc;
+    cursor: wait;
+  }
+
+  #box1 {
+    position: relative;
+
+  }
+
+  #pagination_15 {
+    float: right;
+    margin-right: 20px;
+  }
+</style>
+
+<body ng-app="myApp" ng-controller="ctrl">
+  <div id="right_ctn">
+    <div class="right_m">
+      <!--会议列表-->
+      <div class="hy_list">
+        <div class="box_t">
+          <span class="name">项目列表</span>
+        </div>
+        <!--查询-->
+        <div id="search">
+          <div class="search search1">
+            <span>按项目id查询：</span>
+            <div class="s_text" id="box1">
+              <input name="" type="text" id="txt1">
+            </div>
+            <a href="" class="btn">查询</a>
+          </div>
+          <div class="search search2">
+            <span>按项目名称查询：</span>
+            <div class="s_text" id="box2">
+              <input name="" type="text" id="txt2">
+            </div>
+            <a href="" class="btn">查询</a>
+          </div>
+          <div class="search search3">
+            <span>按项目负责人查询：</span>
+            <div class="s_text" id="box3">
+              <input name="" type="text" id="txt3">
+            </div>
+            <a href="" class="btn">查询</a>
+          </div>
+
+        </div>
+
+        <!--查询-->
+        <div class="space_hx">&nbsp;</div>
+        <!--列表-->
+        <form action="" method="post">
+          <table cellpadding="0" cellspacing="0" class="list_hy" id="table2">
+            <tr>
+              <th class="id" scope="col">id</th>
+              <th class="uname" scope="col">用户名</th>
+              <th class="pname" scope="col">项目名称</th>
+              <th class="path" scope="col">项目所在路径</th>
+              <th class="vnum" scope="col">项目版本号</th>
+              <th class="status" scope="col">当前状态</th>
+              <th class="time" scope="col">项目创建时间</th>
+              <th class="msg" scope="col">项目信息</th>
+              <th class="peo" scope="col">项目负责人</th>
+              <th class="jstatus" scope="col">项目状态</th>
+            </tr>
+            <tr ng-repeat="item in classes" on-finish-rende>
+              <td class="id">{{item.pro_id}}</td>
+              <td class="uname">{{item.username}}</td>
+              <td class="pname">{{item.pro.pro_name}}</td>
+              <td class="path">{{item.pro.pro_path}}</td>
+              <td class="vnum">{{item.score.chinese}}</td>
+              <td class="status">{{item.pro.pro_flag}}</td>
+              <td class="time">{{item.time}}</td>
+              <td class="msg">{{item.pro.pro_list}}</td>
+              <td class="peo">{{item.pro.pro_master}}</td>
+              <td class="jstatus">
+                <a href="./history.html" ng-class='{dis:item.pro.pro_flag}'>历史</a>
+                <!-- 这里a标签的跳转路径和id有关系 -->
+                <a href="./publish.html" class="g">发布</a>
+              </td>
+              <!-- 类名为.g的按钮是绿色的 -->
+            </tr>
+
+
+          </table>
+        </form>
+
+        <!--列表-->
+        <!--右边底部-->
+        <div class="r_foot">
+          <div class="r_foot_m">
+            <!--分页-->
+            <div id="barcon" name="barcon"></div>
+            <!--分页-->
+          </div>
+        </div>
+
+        <!--右边底部-->
+      </div>
+      <!--会议列表-->
+    </div>
+  </div>
+
+  <script>
+    var zyApp = angular.module('myApp', []);
+    zyApp.directive('onFinishRender', function ($timeout) {
+      return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+          if (scope.$last === true) {
+            $timeout(function () {
+              scope.$emit('ngRepeatFinished');
+
+            });
+          }
+        }
+      }
+    })
+
+    zyApp.controller("ctrl", function ($scope, $http) {
+      $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+          var tr = $("#table2 tr");
+          console.log("获取成功");
+          console.log(tr.length);
+        }),
+        $http({
+          methods: "get",
+          url: "./Assets/json/list.json"
+        }).then(function (classes) {
+          $scope.classes = classes.data;
+          $scope.name = classes.data.name;
+          console.log("请求成功");
+        }, function () {
+          console.log("请求失败");
+        });
+    });
+    $(".g").click(function () {
+      console.log(this.val());
+    })
+  </script>
+  <script>
+    window.onload = function () {
+      console.log("全部加载完毕");
+      var tr = $("#table2 tr");
+      console.log(tr.length);
+      console.log(tr[1].children[0].innerHTML);
+      goPage(1);
+    }
+  </script>
+  <script>
+    function goPage(pno) {
+      var itable = document.getElementById("table2");
+      var num = itable.rows.length; //表格所有行数(所有记录数)
+      console.log(num);
+      var totalPage = 0; //总页数
+      var pageSize = 5; //每页显示行数
+      //总共分几页
+      if (num / pageSize > parseInt(num / pageSize)) {
+        totalPage = parseInt(num / pageSize) + 1;
+      } else {
+        totalPage = parseInt(num / pageSize);
+      }
+      var currentPage = pno; //当前页数
+      var startRow = (currentPage - 1) * pageSize + 1; //开始显示的行  31
+      var endRow = currentPage * pageSize; //结束显示的行   40
+      endRow = (endRow > num) ? num : endRow; //40
+      console.log(endRow);
+      //遍历显示数据实现分页
+      for (var i = 1; i < (num + 1); i++) {
+        var irow = itable.rows[i - 1];
+        if (i >= startRow && i <= endRow) {
+          irow.style.display = "table-row";
+        } else {
+          irow.style.display = "none";
+        }
+      }
+      var pageEnd = document.getElementById("pageEnd");
+      var tempStr = "<span>共" + totalPage + "页</span>";
+
+
+      //.bind("click",{"newPage":pageIndex},function(event){
+      //        goPage((pageIndex-1)*pageSize+1,(pageIndex-1)*pageSize+pageSize);
+      //    }).appendTo('#pages');
+      if (currentPage > 1) {
+        tempStr += "<span class='btn' href=\"#\" onClick=\"goPage(" + (1) + ")\">首页</span>";
+        tempStr += "<span class='btn' href=\"#\" onClick=\"goPage(" + (currentPage - 1) + ")\">上一页</span>"
+      } else {
+        tempStr += "<span class='btn'>首页</span>";
+        tempStr += "<span class='btn'>上一页</span>";
+      }
+
+      for (var pageIndex = 1; pageIndex < totalPage + 1; pageIndex++) {
+        tempStr += "<a onclick=\"goPage(" + pageIndex + ")\"><span>" + pageIndex + "</span></a>";
+      }
+
+      if (currentPage < totalPage) {
+        tempStr += "<span class='btn' href=\"#\" onClick=\"goPage(" + (currentPage + 1) + ")\">下一页</span>";
+        tempStr += "<span class='btn' href=\"#\" onClick=\"goPage(" + (totalPage) + ")\">尾页</span>";
+      } else {
+        tempStr += "<span class='btn'>下一页</span>";
+        tempStr += "<span class='btn'>尾页</span>";
+      }
+
+      document.getElementById("barcon").innerHTML = tempStr;
+
+    }
+  </script>
+
+</body>
+
+
+</html>
